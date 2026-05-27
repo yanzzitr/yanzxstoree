@@ -3,48 +3,355 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Copy Teks</title>
+<title>Website Bucin Romantis</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Great+Vibes&display=swap" rel="stylesheet">
 
 <style>
-.copy-box{
-  background:#f1f1f1;
-  padding:15px;
-  border-radius:8px;
-  max-width:600px;
-  word-break:break-all;
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
 }
-.copy-btn{
-  margin-top:10px;
-  padding:10px 15px;
-  border:none;
-  background:#5865F2;
-  color:white;
-  border-radius:6px;
-  cursor:pointer;
+
+html{
+    scroll-behavior:smooth;
 }
-.copy-btn:hover{
-  background:#4752c4;
+
+body{
+    font-family:'Poppins',sans-serif;
+    background:linear-gradient(135deg,#ff9a9e,#fad0c4,#ffdde1);
+    overflow-x:hidden;
+    color:white;
+}
+
+header{
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    padding:20px;
+    position:relative;
+    overflow:hidden;
+}
+
+.overlay{
+    position:absolute;
+    inset:0;
+    background:rgba(0,0,0,0.35);
+}
+
+.hero{
+    position:relative;
+    z-index:2;
+    animation:fadeUp 1.5s ease;
+}
+
+.hero h1{
+    font-size:75px;
+    font-family:'Great Vibes',cursive;
+    margin-bottom:10px;
+    text-shadow:0 5px 15px rgba(0,0,0,0.4);
+}
+
+.hero p{
+    font-size:18px;
+    max-width:700px;
+    line-height:1.7;
+}
+
+.btn{
+    margin-top:30px;
+    display:inline-block;
+    padding:14px 32px;
+    border-radius:999px;
+    background:white;
+    color:#ff4d6d;
+    text-decoration:none;
+    font-weight:bold;
+    transition:0.3s;
+    box-shadow:0 10px 20px rgba(0,0,0,0.2);
+}
+
+.btn:hover{
+    transform:scale(1.08);
+}
+
+.gallery{
+    padding:70px 20px;
+}
+
+.gallery h2{
+    text-align:center;
+    font-size:45px;
+    margin-bottom:40px;
+    font-family:'Great Vibes',cursive;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:22px;
+}
+
+.card{
+    position:relative;
+    overflow:hidden;
+    border-radius:25px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.25);
+    transition:0.4s;
+}
+
+.card:hover{
+    transform:translateY(-10px) scale(1.03);
+}
+
+.card img{
+    width:100%;
+    height:350px;
+    object-fit:cover;
+    display:block;
+}
+
+.caption{
+    position:absolute;
+    bottom:0;
+    width:100%;
+    padding:15px;
+    background:linear-gradient(to top,rgba(0,0,0,0.85),transparent);
+    font-size:15px;
+}
+
+.love-text{
+    padding:90px 20px;
+    text-align:center;
+}
+
+.love-text h2{
+    font-size:55px;
+    margin-bottom:20px;
+    font-family:'Great Vibes',cursive;
+}
+
+.love-text p{
+    max-width:800px;
+    margin:auto;
+    font-size:18px;
+    line-height:1.9;
+}
+
+footer{
+    padding:30px;
+    text-align:center;
+    background:rgba(0,0,0,0.2);
+    font-size:14px;
+}
+
+.hearts{
+    position:fixed;
+    width:100%;
+    height:100%;
+    pointer-events:none;
+    overflow:hidden;
+    top:0;
+    left:0;
+    z-index:1;
+}
+
+.heart{
+    position:absolute;
+    color:white;
+    animation:float 8s linear infinite;
+    opacity:0.7;
+}
+
+@keyframes float{
+    0%{
+        transform:translateY(100vh) scale(0);
+    }
+    100%{
+        transform:translateY(-10vh) scale(1.5);
+    }
+}
+
+@keyframes fadeUp{
+    from{
+        opacity:0;
+        transform:translateY(40px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+@media(max-width:768px){
+
+.hero h1{
+    font-size:55px;
+}
+
+.hero p{
+    font-size:16px;
+}
+
+.gallery h2,
+.love-text h2{
+    font-size:40px;
+}
+
+.card img{
+    height:300px;
+}
+
 }
 </style>
 </head>
-
 <body>
 
-<div class="copy-box">
-  <p id="teksCopy">
-https://discord.com/api/webhooks/1463825545157672980/YLqapBDje-7oC4UDAdYnWgspJEUYaw9Nk8O4Z-T-RqJl5UHt8ofUPlZnIDBlT73M46O-
-  </p>
+<div class="hearts"></div>
 
-  <button class="copy-btn" onclick="copyTeks()">Copy Teks</button>
-</div>
+<header>
+
+    <div class="overlay"></div>
+
+    <div class="hero">
+        <h1>Kamu Adalah Alasanku Bahagia ❤️</h1>
+
+        <p>
+            Dari semua orang yang pernah hadir,
+            cuma kamu yang berhasil bikin hati ini nyaman.
+            Terima kasih sudah jadi bagian paling indah dalam hidupku.
+        </p>
+
+        <a href="#gallery" class="btn">Lihat Kenangan 💕</a>
+    </div>
+
+</header>
+
+<section class="gallery" id="gallery">
+
+    <h2>Galeri Kita 💖</h2>
+
+    <div class="grid">
+
+        <div class="card">
+            <img src="https://files.catbox.moe/k3waij.jpg" alt="">
+            <div class="caption">Tatapan favoritku ❤️</div>
+        </div>
+
+        <div class="card">
+            <img src="https://files.catbox.moe/ieefhg.jpg" alt="">
+            <div class="caption">Manisnya ga ada obat 💕</div>
+        </div>
+
+        <div class="card">
+            <img src="https://files.catbox.moe/uzw6tf.jpg" alt="">
+            <div class="caption">Kamu selalu bikin nyaman ✨</div>
+        </div>
+
+        <div class="card">
+            <img src="https://files.catbox.moe/vbisdn.jpg" alt="">
+            <div class="caption">Senyummu candu 😍</div>
+        </div>
+
+        <div class="card">
+            <img src="https://files.catbox.moe/8pyqcq.jpg" alt="">
+            <div class="caption">Kalau sama kamu rasanya tenang 🤍</div>
+        </div>
+
+        <div class="card">
+            <img src="https://files.catbox.moe/5nlpwi.jpg" alt="">
+            <div class="caption">Favoritku selamanya 💖</div>
+        </div>
+
+        <div class="card">
+            <img src="https://files.catbox.moe/odnkpf.jpg" alt="">
+            <div class="caption">Cantik tanpa usaha 🥰</div>
+        </div>
+
+        <div class="card">
+            <img src="https://files.catbox.moe/xvslb4.jpg" alt="">
+            <div class="caption">Bersamamu semuanya indah 💫</div>
+        </div>
+
+        <div class="card">
+            <img src="https://files.catbox.moe/8c6cmm.jpg" alt="">
+            <div class="caption">Selalu pengen dekat ❤️</div>
+        </div>
+
+        <div class="card">
+            <img src="https://files.catbox.moe/67vdg9.jpg" alt="">
+            <div class="caption">Terima kasih sudah hadir 💕</div>
+        </div>
+
+    </div>
+
+</section>
+
+<section class="love-text">
+
+    <h2>Pesan Untuk Kamu 💌</h2>
+
+    <p>
+        Aku mungkin bukan orang paling sempurna,
+        tapi aku akan selalu berusaha jadi yang terbaik buat kamu.
+        Semoga hubungan ini selalu dipenuhi tawa, kenyamanan,
+        dan cinta yang tidak pernah habis.
+        <br><br>
+        Jangan pergi ya,
+        karena aku sudah terlalu nyaman sama kamu ❤️
+    </p>
+
+</section>
+
+<footer>
+    Dibuat dengan penuh cinta ❤️
+</footer>
+
+<!-- Musik -->
+<audio id="romanticMusic" loop>
+    <source src="https://files.catbox.moe/jbo3lq.m4a" type="audio/mp4">
+</audio>
 
 <script>
-function copyTeks(){
-  const teks = document.getElementById("teksCopy").innerText.trim();
-  navigator.clipboard.writeText(teks).then(() => {
-    alert("Teks berhasil dicopy!");
-  });
+const hearts = document.querySelector('.hearts');
+
+for(let i = 0; i < 40; i++){
+
+    const heart = document.createElement('div');
+
+    heart.classList.add('heart');
+
+    heart.innerHTML = '❤';
+
+    heart.style.left = Math.random() * 100 + 'vw';
+
+    heart.style.fontSize = (Math.random() * 25 + 15) + 'px';
+
+    heart.style.animationDuration = (Math.random() * 5 + 5) + 's';
+
+    heart.style.animationDelay = Math.random() * 5 + 's';
+
+    hearts.appendChild(heart);
 }
+
+// Autoplay musik
+const music = document.getElementById("romanticMusic");
+
+window.addEventListener("load", () => {
+
+    const playMusic = () => {
+        music.play().catch(() => {});
+    };
+
+    playMusic();
+
+    document.body.addEventListener("click", playMusic, { once:true });
+    document.body.addEventListener("touchstart", playMusic, { once:true });
+
+});
 </script>
 
 </body>
