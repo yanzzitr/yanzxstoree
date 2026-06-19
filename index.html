@@ -3,356 +3,906 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Website Bucin Romantis</title>
+<title>YANN YGY STORE</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Great+Vibes&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- LOADING -->
+
+<div id="loading">
+
+<div class="loader"></div>
+
+<h2>YANN YGY STORE</h2>
+
+<p>Memuat Sistem...</p>
+
+</div>
+
+<!-- BURGER MENU -->
+
+<div class="burger" onclick="toggleMenu()">
+☰
+</div>
+
+<div id="sideMenu" class="side-menu">
+
+<a href="#">🏠 Home</a>
+
+<a href="#" onclick="pilihProduk()">
+🛒 Produk
+</a>
+
+<a href="#" onclick="showTestimoni()">
+📸 Testimoni
+</a>
+
+<a href="https://wa.me/62882001163626?text=Halo%20Min,%20saya%20ingin%20melaporkan%20masalah%20pada%20website%20YANN%20YGY%20STORE.%0A%0ADetail%20masalah:%20" target="_blank">
+💬 Hubungi Admin
+</a>
+
+</div>
+
+<!-- INTRO -->
+
+<section id="intro">
+
+<div class="stars"></div>
+
+<div class="rocket-wrapper">
+
+<div class="rocket">
+🚀
+</div>
+
+<div class="flame"></div>
+
+</div>
+
+<div class="intro-content">
+
+<h1>YANN YGY</h1>
+
+<p id="welcomeText">
+Selamat Datang
+</p>
+
+<button class="enter-btn" onclick="enterStore()">
+ENTER STORE
+</button>
+
+</div>
+
+</section>
+
+<!-- WEBSITE -->
+
+<div id="website">
+
+<header>
+
+<h1>YANN YGY STORE</h1>
+
+</header>
+
+<section class="hero">
+
+<h1>AKUN FREE FIRE PREMIUM</h1>
+
+<p>
+FF POLOSAN • ID FF CANTIK
+</p>
+
+</section>
+
+<!-- PRODUK -->
+
+<section class="products" id="produk">
+
+<div class="card" id="ffPolosan">
+
+<img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?w=800" alt="FF">
+
+<div class="content">
+
+<h3>FF POLOSAN</h3>
+
+<p>Akun Free Fire siap main.</p>
+
+<div class="price">
+Hubungi Admin
+</div>
+
+<a href="https://wa.me/62882001163626?text=Halo%20bang,%20saya%20mau%20beli%20FF%20POLOSAN" target="_blank">
+
+<button class="btn">
+BELI SEKARANG
+</button>
+
+</a>
+
+</div>
+
+</div>
+
+<div class="card" id="ffCantik">
+
+<img src="https://images.unsplash.com/photo-1511512578047-dfb367046420?w=800" alt="FF">
+
+<div class="content">
+
+<h3>ID FF CANTIK</h3>
+
+<p>ID cantik pilihan.</p>
+
+<div class="price">
+Hubungi Admin
+</div>
+
+<a href="https://wa.me/62882001163626?text=Halo%20bang,%20saya%20mau%20beli%20ID%20FF%20CANTIK" target="_blank">
+
+<button class="btn">
+BELI SEKARANG
+</button>
+
+</a>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<img src="https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?w=800" alt="FF">
+
+<div class="content">
+
+<h3>FF POLOSAN</h3>
+
+<p>Stok tersedia.</p>
+
+<div class="price">
+Hubungi Admin
+</div>
+
+<a href="https://wa.me/62882001163626?text=Halo%20bang,%20saya%20mau%20beli%20FF%20POLOSAN" target="_blank">
+
+<button class="btn">
+BELI SEKARANG
+</button>
+
+</a>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<img src="https://images.unsplash.com/photo-1511882150382-421056c89033?w=800" alt="FF">
+
+<div class="content">
+
+<h3>ID FF CANTIK</h3>
+
+<p>Siap pakai.</p>
+
+<div class="price">
+Hubungi Admin
+</div>
+
+<a href="https://wa.me/62882001163626?text=Halo%20bang,%20saya%20mau%20beli%20ID%20FF%20CANTIK" target="_blank">
+
+<button class="btn">
+BELI SEKARANG
+</button>
+
+</a>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- POPUP PRODUK -->
+
+<div id="produkPopup" class="produk-popup">
+
+<div class="popup-box">
+
+<h2>Pilih Produk</h2>
+
+<button onclick="bukaPolosan()">
+🎮 Free Fire Polosan
+</button>
+
+<button onclick="bukaCantik()">
+👑 ID Free Fire Cantik
+</button>
+
+<button onclick="tutupPopup()">
+❌ Tutup
+</button>
+
+</div>
+
+</div>
+
+<!-- FOOTER -->
+
+<footer>
+
+<h3>YANN YGY STORE</h3>
+
+<p>Trusted Digital Store</p>
+
+</footer>
+
+</div>
 
 <style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
 
-html{
-    scroll-behavior:smooth;
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
 }
 
 body{
-    font-family:'Poppins',sans-serif;
-    background:linear-gradient(135deg,#ff9a9e,#fad0c4,#ffdde1);
-    overflow-x:hidden;
-    color:white;
+background:#0b0b0b;
+color:white;
+overflow-x:hidden;
+}
+
+#loading{
+position:fixed;
+inset:0;
+background:black;
+display:flex;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+z-index:999999;
+}
+
+.loader{
+width:70px;
+height:70px;
+border:5px solid #222;
+border-top:5px solid white;
+border-radius:50%;
+animation:spin 1s linear infinite;
+margin-bottom:20px;
+}
+
+@keyframes spin{
+100%{
+transform:rotate(360deg);
+}
+}
+
+#intro{
+position:relative;
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+overflow:hidden;
+background:linear-gradient(rgba(0,0,0,.5),rgba(0,0,0,.8)),
+url('https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=1920');
+background-size:cover;
+background-position:center;
+}
+
+.stars{
+position:absolute;
+inset:0;
+}
+
+.rocket-wrapper{
+position:absolute;
+left:50%;
+bottom:-250px;
+transform:translateX(-50%);
+animation:launch 7s linear forwards;
+}
+
+.rocket{
+font-size:90px;
+}
+
+.flame{
+position:absolute;
+top:70px;
+left:50%;
+transform:translateX(-50%);
+width:20px;
+height:120px;
+background:linear-gradient(to bottom,#fff,#ffd54f,#ff9800,#ff5722,transparent);
+filter:blur(8px);
+animation:flame .15s infinite alternate;
+}
+
+@keyframes flame{
+from{height:100px;}
+to{height:150px;}
+}
+
+@keyframes launch{
+to{
+bottom:120%;
+}
+}
+
+.intro-content{
+text-align:center;
+z-index:5;
+}
+
+.enter-btn{
+margin-top:20px;
+padding:12px 35px;
+border:none;
+border-radius:10px;
+cursor:pointer;
+font-weight:700;
+}
+
+#website{
+display:none;
 }
 
 header{
-    height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    text-align:center;
-    padding:20px;
-    position:relative;
-    overflow:hidden;
-}
-
-.overlay{
-    position:absolute;
-    inset:0;
-    background:rgba(0,0,0,0.35);
+padding:25px;
+text-align:center;
+border-bottom:1px solid #222;
 }
 
 .hero{
-    position:relative;
-    z-index:2;
-    animation:fadeUp 1.5s ease;
+padding:80px 20px;
+text-align:center;
 }
 
-.hero h1{
-    font-size:75px;
-    font-family:'Great Vibes',cursive;
-    margin-bottom:10px;
-    text-shadow:0 5px 15px rgba(0,0,0,0.4);
-}
-
-.hero p{
-    font-size:18px;
-    max-width:700px;
-    line-height:1.7;
-}
-
-.btn{
-    margin-top:30px;
-    display:inline-block;
-    padding:14px 32px;
-    border-radius:999px;
-    background:white;
-    color:#ff4d6d;
-    text-decoration:none;
-    font-weight:bold;
-    transition:0.3s;
-    box-shadow:0 10px 20px rgba(0,0,0,0.2);
-}
-
-.btn:hover{
-    transform:scale(1.08);
-}
-
-.gallery{
-    padding:70px 20px;
-}
-
-.gallery h2{
-    text-align:center;
-    font-size:45px;
-    margin-bottom:40px;
-    font-family:'Great Vibes',cursive;
-}
-
-.grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-    gap:22px;
+.products{
+max-width:1200px;
+margin:auto;
+padding:25px;
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:20px;
 }
 
 .card{
-    position:relative;
-    overflow:hidden;
-    border-radius:25px;
-    box-shadow:0 10px 30px rgba(0,0,0,0.25);
-    transition:0.4s;
-}
-
-.card:hover{
-    transform:translateY(-10px) scale(1.03);
+background:#151515;
+border-radius:15px;
+overflow:hidden;
+border:1px solid #222;
 }
 
 .card img{
-    width:100%;
-    height:350px;
-    object-fit:cover;
-    display:block;
+width:100%;
+height:220px;
+object-fit:cover;
 }
 
-.caption{
-    position:absolute;
-    bottom:0;
-    width:100%;
-    padding:15px;
-    background:linear-gradient(to top,rgba(0,0,0,0.85),transparent);
-    font-size:15px;
+.content{
+padding:20px;
 }
 
-.love-text{
-    padding:90px 20px;
-    text-align:center;
+.price{
+margin-top:10px;
+font-weight:bold;
 }
 
-.love-text h2{
-    font-size:55px;
-    margin-bottom:20px;
-    font-family:'Great Vibes',cursive;
-}
-
-.love-text p{
-    max-width:800px;
-    margin:auto;
-    font-size:18px;
-    line-height:1.9;
+.btn{
+width:100%;
+padding:12px;
+margin-top:15px;
+border:none;
+border-radius:8px;
+cursor:pointer;
+font-weight:700;
 }
 
 footer{
-    padding:30px;
-    text-align:center;
-    background:rgba(0,0,0,0.2);
-    font-size:14px;
+padding:40px;
+text-align:center;
+color:#aaa;
 }
 
-.hearts{
-    position:fixed;
-    width:100%;
-    height:100%;
-    pointer-events:none;
-    overflow:hidden;
-    top:0;
-    left:0;
-    z-index:1;
+.burger{
+position:fixed;
+top:20px;
+left:20px;
+font-size:28px;
+cursor:pointer;
+z-index:99999;
+background:rgba(0,0,0,.7);
+width:45px;
+height:45px;
+display:flex;
+justify-content:center;
+align-items:center;
+border-radius:10px;
 }
 
-.heart{
-    position:absolute;
-    color:white;
-    animation:float 8s linear infinite;
-    opacity:0.7;
+.side-menu{
+position:fixed;
+top:0;
+left:-260px;
+width:250px;
+height:100%;
+background:#111;
+padding-top:80px;
+transition:.4s;
+z-index:99998;
 }
 
-@keyframes float{
-    0%{
-        transform:translateY(100vh) scale(0);
-    }
-    100%{
-        transform:translateY(-10vh) scale(1.5);
-    }
+.side-menu a{
+display:block;
+padding:15px 25px;
+color:white;
+text-decoration:none;
+border-bottom:1px solid #222;
 }
 
-@keyframes fadeUp{
-    from{
-        opacity:0;
-        transform:translateY(40px);
-    }
-    to{
-        opacity:1;
-        transform:translateY(0);
-    }
+.produk-popup{
+display:none;
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.8);
+justify-content:center;
+align-items:center;
+z-index:999999;
+}
+
+.popup-box{
+background:#111;
+padding:25px;
+border-radius:15px;
+width:300px;
+text-align:center;
+}
+
+.popup-box button{
+width:100%;
+margin-top:10px;
+padding:12px;
+border:none;
+border-radius:8px;
+cursor:pointer;
 }
 
 @media(max-width:768px){
 
-.hero h1{
-    font-size:55px;
-}
-
-.hero p{
-    font-size:16px;
-}
-
-.gallery h2,
-.love-text h2{
-    font-size:40px;
+.products{
+grid-template-columns:repeat(2,1fr);
+gap:10px;
 }
 
 .card img{
-    height:300px;
+height:130px;
 }
 
 }
-</style>
-</head>
-<body>
 
-<div class="hearts"></div>
+</style><script>
 
-<header>
+const messages=[
+"Selamat datang di YANN YGY Store 🚀",
+"Semoga harimu menyenangkan ✨",
+"Temukan akun terbaik hari ini 🔥",
+"Terima kasih sudah berkunjung 👋"
+];
 
-    <div class="overlay"></div>
+document.getElementById("welcomeText").innerText=
+messages[Math.floor(Math.random()*messages.length)];
 
-    <div class="hero">
-        <h1>Kamu Adalah Alasanku Bahagia ❤️</h1>
+window.onload=function(){
 
-        <p>
-            Dari semua orang yang pernah hadir,
-            cuma kamu yang berhasil bikin hati ini nyaman.
-            Terima kasih sudah jadi bagian paling indah dalam hidupku.
-        </p>
+setTimeout(()=>{
 
-        <a href="#gallery" class="btn">Lihat Kenangan 💕</a>
-    </div>
+document.getElementById("loading").style.display="none";
 
-</header>
+},2500);
 
-<section class="gallery" id="gallery">
+};
 
-    <h2>Galeri Kita 💖</h2>
+function enterStore(){
 
-    <div class="grid">
+document.getElementById("intro").style.display="none";
 
-        <div class="card">
-            <img src="https://files.catbox.moe/k3waij.jpg" alt="">
-            <div class="caption">Tatapan favoritku ❤️</div>
-        </div>
+document.getElementById("website").style.display="block";
 
-        <div class="card">
-            <img src="https://files.catbox.moe/ieefhg.jpg" alt="">
-            <div class="caption">Manisnya ga ada obat 💕</div>
-        </div>
+}
 
-        <div class="card">
-            <img src="https://files.catbox.moe/uzw6tf.jpg" alt="">
-            <div class="caption">Kamu selalu bikin nyaman ✨</div>
-        </div>
+function toggleMenu(){
 
-        <div class="card">
-            <img src="https://files.catbox.moe/vbisdn.jpg" alt="">
-            <div class="caption">Senyummu candu 😍</div>
-        </div>
+const menu=document.getElementById("sideMenu");
 
-        <div class="card">
-            <img src="https://files.catbox.moe/8pyqcq.jpg" alt="">
-            <div class="caption">Kalau sama kamu rasanya tenang 🤍</div>
-        </div>
+menu.style.left=
+menu.style.left==="0px"
+? "-260px"
+: "0px";
 
-        <div class="card">
-            <img src="https://files.catbox.moe/5nlpwi.jpg" alt="">
-            <div class="caption">Favoritku selamanya 💖</div>
-        </div>
+}
 
-        <div class="card">
-            <img src="https://files.catbox.moe/odnkpf.jpg" alt="">
-            <div class="caption">Cantik tanpa usaha 🥰</div>
-        </div>
+function showTestimoni(){
 
-        <div class="card">
-            <img src="https://files.catbox.moe/xvslb4.jpg" alt="">
-            <div class="caption">Bersamamu semuanya indah 💫</div>
-        </div>
+let pilih=confirm(
+"OK = Instagram\nBatal = Channel WhatsApp"
+);
 
-        <div class="card">
-            <img src="https://files.catbox.moe/8c6cmm.jpg" alt="">
-            <div class="caption">Selalu pengen dekat ❤️</div>
-        </div>
+if(pilih){
 
-        <div class="card">
-            <img src="https://files.catbox.moe/67vdg9.jpg" alt="">
-            <div class="caption">Terima kasih sudah hadir 💕</div>
-        </div>
+window.open(
+"https://instagram.com/yannygyreal",
+"_blank"
+);
 
-    </div>
+}else{
+
+window.open(
+"https://whatsapp.com/channel/0029Vb8P8kv8F2p73QX6Py2k",
+"_blank"
+);
+
+}
+
+}
+
+function pilihProduk(){
+
+document.getElementById("produkPopup")
+.style.display="flex";
+
+}
+
+function tutupPopup(){
+
+document.getElementById("produkPopup")
+.style.display="none";
+
+}
+
+function bukaPolosan(){
+
+tutupPopup();
+
+document.getElementById("ffPolosan")
+.scrollIntoView({
+behavior:"smooth"
+});
+
+}
+
+function bukaCantik(){
+
+tutupPopup();
+
+document.getElementById("ffCantik")
+.scrollIntoView({
+behavior:"smooth"
+});
+
+}
+
+</script></body>
+</html>
+
+<!-- PROMO -->
+
+<section class="announcement">
+
+<div class="announce-box">
+
+<h2>🔥 PROMO HARI INI 🔥</h2>
+
+<p>
+Selamat datang di YANN YGY STORE.
+Pastikan cek testimoni sebelum membeli.
+</p>
+
+</div>
 
 </section>
 
-<section class="love-text">
-
-    <h2>Pesan Untuk Kamu 💌</h2>
-
-    <p>
-        Aku mungkin bukan orang paling sempurna,
-        tapi aku akan selalu berusaha jadi yang terbaik buat kamu.
-        Semoga hubungan ini selalu dipenuhi tawa, kenyamanan,
-        dan cinta yang tidak pernah habis.
-        <br><br>
-        Jangan pergi ya,
-        karena aku sudah terlalu nyaman sama kamu ❤️
-    </p>
-
-</section>
-
-<footer>
-    Dibuat dengan penuh cinta ❤️
-</footer>
-
-<!-- Musik -->
-<audio id="romanticMusic" loop>
-    <source src="https://files.catbox.moe/jbo3lq.m4a" type="audio/mp4">
-</audio>
-
-<script>
-const hearts = document.querySelector('.hearts');
-
-for(let i = 0; i < 40; i++){
-
-    const heart = document.createElement('div');
-
-    heart.classList.add('heart');
-
-    heart.innerHTML = '❤';
-
-    heart.style.left = Math.random() * 100 + 'vw';
-
-    heart.style.fontSize = (Math.random() * 25 + 15) + 'px';
-
-    heart.style.animationDuration = (Math.random() * 5 + 5) + 's';
-
-    heart.style.animationDelay = Math.random() * 5 + 's';
-
-    hearts.appendChild(heart);
+.announcement{
+padding:20px;
+display:flex;
+justify-content:center;
 }
 
-// Autoplay musik
-const music = document.getElementById("romanticMusic");
+.announce-box{
+max-width:800px;
+width:100%;
+background:#151515;
+border:1px solid #222;
+padding:20px;
+border-radius:15px;
+text-align:center;
+}
 
-window.addEventListener("load", () => {
+.announce-box h2{
+margin-bottom:10px;
+}
 
-    const playMusic = () => {
-        music.play().catch(() => {});
-    };
+document.addEventListener("click",function(e){
 
-    playMusic();
+const menu=document.getElementById("sideMenu");
+const burger=document.querySelector(".burger");
 
-    document.body.addEventListener("click", playMusic, { once:true });
-    document.body.addEventListener("touchstart", playMusic, { once:true });
+if(
+!menu.contains(e.target)
+&&
+!burger.contains(e.target)
+){
+
+menu.style.left="-260px";
+
+}
 
 });
-</script>
 
-</body>
-</html>
+ 
+ <section class="hero">
+
+<h1>AKUN FREE FIRE PREMIUM</h1>
+
+<p>
+FF POLOSAN • ID FF CANTIK
+</p>
+
+</section>
+
+<a href="#" onclick="showTestimoni()">
+📸 Testimoni
+</a> function showTestimoni(){
+
+let pilih = confirm(
+"OK = Instagram\nBatal = Channel WhatsApp"
+);
+
+if(pilih){
+
+window.open(
+"https://instagram.com/yannygyreal",
+"_blank"
+);
+
+}else{
+
+window.open(
+"https://whatsapp.com/channel/0029Vb8P8kv8F2p73QX6Py2k",
+"_blank"
+);
+
+}
+
+}
+
+<a href="#" onclick="caraOrder()">
+📦 Cara Order
+</a> function caraOrder(){
+
+alert(
+"📦 CARA ORDER\\n\\n" +
+"1. Pilih Produk\\n" +
+"2. Klik BELI\\n" +
+"3. Transfer ke DANA\\n" +
+"4. Klik Saya Sudah Transfer\\n" +
+"5. Kirim bukti transfer ke Admin\\n" +
+"6. Data akun akan dikirim Admin"
+);
+
+}
+
+<div class="running-text">
+
+<marquee>
+🔥 Selamat Datang Di YANN YGY STORE • Fast Response • Trusted Seller • Cek Testimoni Terlebih Dahulu 🔥
+</marquee>
+
+</div>
+
+<div class="running-text">
+
+<marquee>
+🔥 Selamat Datang Di YANN YGY STORE • Fast Response • Trusted Seller • Cek Testimoni Terlebih Dahulu 🔥
+</marquee>
+
+</div>
+
+.running-text{
+background:#111;
+padding:10px;
+border-bottom:1px solid #222;
+}
+
+<section class="stats">
+
+<div class="stat-box">
+<h2>100+</h2>
+<p>Transaksi</p>
+</div>
+
+<div class="stat-box">
+<h2>24 Jam</h2>
+<p>Fast Respon</p>
+</div>
+
+<div class="stat-box">
+<h2>100%</h2>
+<p>Trusted</p>
+</div>
+
+</section>
+
+.stats{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:15px;
+padding:20px;
+max-width:900px;
+margin:auto;
+}
+
+.stat-box{
+background:#151515;
+padding:20px;
+text-align:center;
+border-radius:15px;
+border:1px solid #222;
+}
+
+<button id="topBtn" onclick="topFunction()">
+⬆
+</button>
+
+#topBtn{
+display:none;
+position:fixed;
+bottom:20px;
+right:20px;
+width:50px;
+height:50px;
+border:none;
+border-radius:50%;
+cursor:pointer;
+font-size:20px;
+z-index:999;
+}
+
+window.onscroll=function(){
+
+const btn=
+document.getElementById("topBtn");
+
+if(
+document.body.scrollTop>300
+||
+document.documentElement.scrollTop>300
+){
+
+btn.style.display="block";
+
+}else{
+
+btn.style.display="none";
+
+}
+
+};
+
+function topFunction(){
+
+window.scrollTo({
+top:0,
+behavior:"smooth"
+});
+
+}
+
+.card{
+opacity:0;
+transform:translateY(40px);
+transition:.8s;
+}
+
+.card.show{
+opacity:1;
+transform:translateY(0);
+}
+
+const cards=
+document.querySelectorAll(".card");
+
+window.addEventListener(
+"scroll",
+()=>{
+
+cards.forEach(card=>{
+
+const top=
+card.getBoundingClientRect().top;
+
+if(top<window.innerHeight-100){
+
+card.classList.add("show");
+
+}
+
+});
+
+}
+);
+
+header h1{
+
+text-shadow:
+0 0 10px rgba(255,255,255,.5),
+0 0 20px rgba(255,255,255,.3);
+
+}
+
+.card{
+transition:.3s;
+}
+
+.card:hover{
+
+transform:translateY(-5px);
+
+box-shadow:
+0 10px 25px rgba(255,255,255,.08);
+
+}
+
+<audio id="bgMusic" loop>
+<source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<button id="musicBtn" onclick="toggleMusic()">
+🎵
+</button>
+
+#musicBtn{
+position:fixed;
+bottom:85px;
+right:20px;
+width:50px;
+height:50px;
+border:none;
+border-radius:50%;
+cursor:pointer;
+z-index:999;
+}
+
+let musicPlaying=false;
+
+function toggleMusic(){
+
+const music=
+document.getElementById("bgMusic");
+
+if(!musicPlaying){
+
+music.play();
+musicPlaying=true;
+
+}else{
+
+music.pause();
+musicPlaying=false;
+
+}
+
+}
+
+    
