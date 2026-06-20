@@ -3,247 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>YANN YGY STORE</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-
-<link rel="stylesheet" href="style.css">
-</head>
-<body>
-
-<!-- LOADING -->
-
-<div id="loading">
-
-<div class="loader"></div>
-
-<h2>YANN YGY STORE</h2>
-
-<p>Memuat Sistem...</p>
-
-</div>
-
-<!-- BURGER MENU -->
-
-<div class="burger" onclick="toggleMenu()">
-☰
-</div>
-
-<div id="sideMenu" class="side-menu">
-
-<a href="#">🏠 Home</a>
-
-<a href="#" onclick="pilihProduk()">
-🛒 Produk
-</a>
-
-<a href="#" onclick="showTestimoni()">
-📸 Testimoni
-</a>
-
-<a href="https://wa.me/62882001163626?text=Halo%20Min,%20saya%20ingin%20melaporkan%20masalah%20pada%20website%20YANN%20YGY%20STORE.%0A%0ADetail%20masalah:%20" target="_blank">
-💬 Hubungi Admin
-</a>
-
-</div>
-
-<!-- INTRO -->
-
-<section id="intro">
-
-<div class="stars"></div>
-
-<div class="rocket-wrapper">
-
-<div class="rocket">
-🚀
-</div>
-
-<div class="flame"></div>
-
-</div>
-
-<div class="intro-content">
-
-<h1>YANN YGY</h1>
-
-<p id="welcomeText">
-Selamat Datang
-</p>
-
-<button class="enter-btn" onclick="enterStore()">
-ENTER STORE
-</button>
-
-</div>
-
-</section>
-
-<!-- WEBSITE -->
-
-<div id="website">
-
-<header>
-
-<h1>YANN YGY STORE</h1>
-
-</header>
-
-<section class="hero">
-
-<h1>AKUN FREE FIRE PREMIUM</h1>
-
-<p>
-FF POLOSAN • ID FF CANTIK
-</p>
-
-</section>
-
-<!-- PRODUK -->
-
-<section class="products" id="produk">
-
-<div class="card" id="ffPolosan">
-
-<img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?w=800" alt="FF">
-
-<div class="content">
-
-<h3>FF POLOSAN</h3>
-
-<p>Akun Free Fire siap main.</p>
-
-<div class="price">
-Hubungi Admin
-</div>
-
-<a href="https://wa.me/62882001163626?text=Halo%20bang,%20saya%20mau%20beli%20FF%20POLOSAN" target="_blank">
-
-<button class="btn">
-BELI SEKARANG
-</button>
-
-</a>
-
-</div>
-
-</div>
-
-<div class="card" id="ffCantik">
-
-<img src="https://images.unsplash.com/photo-1511512578047-dfb367046420?w=800" alt="FF">
-
-<div class="content">
-
-<h3>ID FF CANTIK</h3>
-
-<p>ID cantik pilihan.</p>
-
-<div class="price">
-Hubungi Admin
-</div>
-
-<a href="https://wa.me/62882001163626?text=Halo%20bang,%20saya%20mau%20beli%20ID%20FF%20CANTIK" target="_blank">
-
-<button class="btn">
-BELI SEKARANG
-</button>
-
-</a>
-
-</div>
-
-</div>
-
-<div class="card">
-
-<img src="https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?w=800" alt="FF">
-
-<div class="content">
-
-<h3>FF POLOSAN</h3>
-
-<p>Stok tersedia.</p>
-
-<div class="price">
-Hubungi Admin
-</div>
-
-<a href="https://wa.me/62882001163626?text=Halo%20bang,%20saya%20mau%20beli%20FF%20POLOSAN" target="_blank">
-
-<button class="btn">
-BELI SEKARANG
-</button>
-
-</a>
-
-</div>
-
-</div>
-
-<div class="card">
-
-<img src="https://images.unsplash.com/photo-1511882150382-421056c89033?w=800" alt="FF">
-
-<div class="content">
-
-<h3>ID FF CANTIK</h3>
-
-<p>Siap pakai.</p>
-
-<div class="price">
-Hubungi Admin
-</div>
-
-<a href="https://wa.me/62882001163626?text=Halo%20bang,%20saya%20mau%20beli%20ID%20FF%20CANTIK" target="_blank">
-
-<button class="btn">
-BELI SEKARANG
-</button>
-
-</a>
-
-</div>
-
-</div>
-
-</section>
-
-<!-- POPUP PRODUK -->
-
-<div id="produkPopup" class="produk-popup">
-
-<div class="popup-box">
-
-<h2>Pilih Produk</h2>
-
-<button onclick="bukaPolosan()">
-🎮 Free Fire Polosan
-</button>
-
-<button onclick="bukaCantik()">
-👑 ID Free Fire Cantik
-</button>
-
-<button onclick="tutupPopup()">
-❌ Tutup
-</button>
-
-</div>
-
-</div>
-
-<!-- FOOTER -->
-
-<footer>
-
-<h3>YANN YGY STORE</h3>
-
-<p>Trusted Digital Store</p>
-
-</footer>
-
-</div>
 
 <style>
 
@@ -255,10 +18,12 @@ font-family:'Poppins',sans-serif;
 }
 
 body{
-background:#0b0b0b;
+background:#000;
 color:white;
 overflow-x:hidden;
 }
+
+/* LOADING */
 
 #loading{
 position:fixed;
@@ -278,7 +43,6 @@ border:5px solid #222;
 border-top:5px solid white;
 border-radius:50%;
 animation:spin 1s linear infinite;
-margin-bottom:20px;
 }
 
 @keyframes spin{
@@ -287,155 +51,200 @@ transform:rotate(360deg);
 }
 }
 
+/* INTRO */
+
 #intro{
 position:relative;
 height:100vh;
+overflow:hidden;
 display:flex;
 justify-content:center;
 align-items:center;
-overflow:hidden;
-background:linear-gradient(rgba(0,0,0,.5),rgba(0,0,0,.8)),
-url('https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=1920');
-background-size:cover;
-background-position:center;
+text-align:center;
+background:
+radial-gradient(circle at center,#081326,#000);
 }
+
+/* STARS */
 
 .stars{
 position:absolute;
 inset:0;
+overflow:hidden;
 }
 
-.rocket-wrapper{
+.star{
 position:absolute;
-left:50%;
-bottom:-250px;
-transform:translateX(-50%);
-animation:launch 7s linear forwards;
+width:3px;
+height:3px;
+background:white;
+border-radius:50%;
+animation:starMove linear infinite;
 }
+
+@keyframes starMove{
+from{
+transform:translateY(-100vh);
+}
+to{
+transform:translateY(100vh);
+}
+}
+
+/* NEBULA */
+
+.nebula{
+position:absolute;
+border-radius:50%;
+filter:blur(80px);
+opacity:.35;
+}
+
+.nebula1{
+width:400px;
+height:400px;
+background:#00aaff;
+top:-100px;
+left:-100px;
+animation:moveNebula 8s infinite alternate;
+}
+
+.nebula2{
+width:500px;
+height:500px;
+background:#6a00ff;
+bottom:-150px;
+right:-150px;
+animation:moveNebula 10s infinite alternate;
+}
+
+@keyframes moveNebula{
+from{
+transform:translate(0,0);
+}
+to{
+transform:translate(50px,-30px);
+}
+}
+
+/* METEOR */
+
+.meteor{
+position:absolute;
+width:250px;
+height:3px;
+background:white;
+top:20%;
+left:-300px;
+transform:rotate(-25deg);
+box-shadow:0 0 20px white;
+animation:meteorMove 3s linear infinite;
+}
+
+@keyframes meteorMove{
+from{
+left:-300px;
+top:20%;
+}
+to{
+left:120%;
+top:60%;
+}
+}
+
+/* ROCKET */
 
 .rocket{
-font-size:90px;
-}
-
-.flame{
 position:absolute;
-top:70px;
+font-size:70px;
+bottom:-100px;
 left:50%;
 transform:translateX(-50%);
-width:20px;
-height:120px;
-background:linear-gradient(to bottom,#fff,#ffd54f,#ff9800,#ff5722,transparent);
-filter:blur(8px);
-animation:flame .15s infinite alternate;
-}
-
-@keyframes flame{
-from{height:100px;}
-to{height:150px;}
+animation:launch 5s linear infinite;
 }
 
 @keyframes launch{
+from{
+bottom:-100px;
+}
 to{
 bottom:120%;
 }
 }
 
+/* INTRO CONTENT */
+
 .intro-content{
-text-align:center;
-z-index:5;
+position:relative;
+z-index:10;
+}
+
+.intro-content h1{
+font-size:3rem;
+text-shadow:
+0 0 10px #00aaff,
+0 0 30px #00aaff;
+}
+
+.intro-content p{
+margin-top:10px;
+color:#ddd;
 }
 
 .enter-btn{
 margin-top:20px;
 padding:12px 35px;
 border:none;
-border-radius:10px;
+border-radius:12px;
+font-weight:bold;
 cursor:pointer;
-font-weight:700;
 }
+
+/* WEBSITE */
 
 #website{
 display:none;
+min-height:100vh;
+
+background:
+linear-gradient(
+rgba(0,0,0,.65),
+rgba(0,0,0,.65)
+),
+url('https://files.catbox.moe/hfwrix.png');
+
+background-size:cover;
+background-position:center;
+background-attachment:fixed;
 }
 
-header{
-padding:25px;
-text-align:center;
-border-bottom:1px solid #222;
-}
-
-.hero{
-padding:80px 20px;
-text-align:center;
-}
-
-.products{
-max-width:1200px;
-margin:auto;
-padding:25px;
-display:grid;
-grid-template-columns:repeat(2,1fr);
-gap:20px;
-}
-
-.card{
-background:#151515;
-border-radius:15px;
-overflow:hidden;
-border:1px solid #222;
-}
-
-.card img{
-width:100%;
-height:220px;
-object-fit:cover;
-}
-
-.content{
-padding:20px;
-}
-
-.price{
-margin-top:10px;
-font-weight:bold;
-}
-
-.btn{
-width:100%;
-padding:12px;
-margin-top:15px;
-border:none;
-border-radius:8px;
-cursor:pointer;
-font-weight:700;
-}
-
-footer{
-padding:40px;
-text-align:center;
-color:#aaa;
-}
+/* HAMBURGER */
 
 .burger{
 position:fixed;
-top:20px;
-left:20px;
-font-size:28px;
-cursor:pointer;
-z-index:99999;
-background:rgba(0,0,0,.7);
+top:15px;
+left:15px;
 width:45px;
 height:45px;
 display:flex;
 justify-content:center;
 align-items:center;
+background:rgba(0,0,0,.7);
 border-radius:10px;
+cursor:pointer;
+z-index:99999;
 }
+
+.hidden{
+display:none!important;
+}
+
+/* SIDE MENU */
 
 .side-menu{
 position:fixed;
-top:0;
 left:-260px;
+top:0;
 width:250px;
 height:100%;
 background:#111;
@@ -446,34 +255,90 @@ z-index:99998;
 
 .side-menu a{
 display:block;
-padding:15px 25px;
+padding:15px 20px;
 color:white;
 text-decoration:none;
 border-bottom:1px solid #222;
 }
 
-.produk-popup{
+/* WELCOME */
+
+.welcome{
+text-align:center;
+padding-top:100px;
+}
+
+.welcome h1{
+font-size:2rem;
+}
+
+.welcome h2{
+color:#00bfff;
+margin-top:10px;
+}
+
+/* PRODUCTS */
+
+.products{
+display:flex;
+justify-content:center;
+gap:20px;
+flex-wrap:wrap;
+padding:40px 20px;
+}
+
+.card{
+width:260px;
+background:#111;
+border-radius:15px;
+overflow:hidden;
+border:1px solid #222;
+}
+
+.card img{
+width:100%;
+height:170px;
+object-fit:cover;
+}
+
+.content{
+padding:15px;
+}
+
+.btn{
+width:100%;
+padding:12px;
+margin-top:10px;
+border:none;
+border-radius:8px;
+cursor:pointer;
+font-weight:bold;
+}
+
+/* POPUP */
+
+.popup{
 display:none;
 position:fixed;
 inset:0;
-background:rgba(0,0,0,.8);
+background:rgba(0,0,0,.85);
 justify-content:center;
 align-items:center;
 z-index:999999;
 }
 
 .popup-box{
+width:320px;
 background:#111;
-padding:25px;
+padding:20px;
 border-radius:15px;
-width:300px;
 text-align:center;
 }
 
 .popup-box button{
 width:100%;
-margin-top:10px;
 padding:12px;
+margin-top:10px;
 border:none;
 border-radius:8px;
 cursor:pointer;
@@ -482,427 +347,388 @@ cursor:pointer;
 @media(max-width:768px){
 
 .products{
-grid-template-columns:repeat(2,1fr);
-gap:10px;
+flex-direction:column;
+align-items:center;
 }
 
-.card img{
-height:130px;
+.card{
+width:90%;
 }
 
 }
 
-</style><script>
+</style>
 
-const messages=[
-"Selamat datang di YANN YGY Store 🚀",
-"Semoga harimu menyenangkan ✨",
-"Temukan akun terbaik hari ini 🔥",
-"Terima kasih sudah berkunjung 👋"
-];
+</head>
+<body>
 
-document.getElementById("welcomeText").innerText=
-messages[Math.floor(Math.random()*messages.length)];
+<!-- LOADING -->
+<div id="loading">
 
-window.onload=function(){
+    <div class="loader"></div>
 
-setTimeout(()=>{
+    <h2 style="margin-top:20px;">
+        YANN YGY STORE
+    </h2>
 
-document.getElementById("loading").style.display="none";
+    <p style="margin-top:10px;">
+        Memuat Sistem...
+    </p>
 
-},2500);
+</div>
+
+<!-- HAMBURGER -->
+<div class="burger hidden" id="burger" onclick="toggleMenu()">
+☰
+</div>
+
+<!-- MENU -->
+<div class="side-menu" id="sideMenu">
+
+    <a href="#" onclick="goHome()">
+        🏠 Home
+    </a>
+
+    <a href="#" onclick="pilihProduk()">
+        🛒 Produk
+    </a>
+
+    <a href="https://wa.me/62882001163626?text=Min%20mau%20lapor%20website%20ada%20kendala"
+       target="_blank">
+        💬 Hubungi Admin
+    </a>
+
+</div>
+
+<!-- INTRO -->
+<section id="intro">
+
+    <!-- STARS -->
+    <div class="stars" id="stars"></div>
+
+    <!-- NEBULA -->
+    <div class="nebula nebula1"></div>
+    <div class="nebula nebula2"></div>
+
+    <!-- METEOR -->
+    <div class="meteor"></div>
+
+    <!-- ROCKET -->
+    <div class="rocket">
+        🚀
+    </div>
+
+    <!-- CONTENT -->
+    <div class="intro-content">
+
+        <h1>
+            YANN YGY STORE
+        </h1>
+
+        <p id="welcomeText">
+            Welcome To Galaxy Store
+        </p>
+
+        <button class="enter-btn" onclick="enterStore()">
+            ENTER STORE
+        </button>
+
+    </div>
+
+</section>
+
+<!-- WEBSITE -->
+<div id="website">
+
+    <!-- WELCOME -->
+    <section class="welcome">
+
+        <h1>
+            WELCOME TO WEBSITE
+        </h1>
+
+        <h2>
+            YANN YGY STORE
+        </h2>
+
+        <p style="margin-top:10px;">
+            Trusted Digital Store
+        </p>
+
+    </section>
+
+    <!-- PRODUCTS -->
+    <section class="products">
+
+        <!-- FREE FIRE -->
+        <div class="card" id="ffPolosan">
+
+            <img
+            src="https://images.unsplash.com/photo-1542751371-adc38448a05e?w=800"
+            alt="Free Fire">
+
+            <div class="content">
+
+                <h3>
+                    STOK AKUN FREE FIRE
+                </h3>
+
+                <p>
+                    Akun siap main dan siap pakai.
+                </p>
+
+                <button
+                class="btn"
+                onclick="buyPolosan()">
+
+                    BELI SEKARANG
+
+                </button>
+
+            </div>
+
+        </div>
+
+        <!-- FREE FIRE GOIB -->
+        <div class="card" id="ffGoib">
+
+            <img
+            src="https://images.unsplash.com/photo-1511512578047-dfb367046420?w=800"
+            alt="Free Fire Goib">
+
+            <div class="content">
+
+                <h3>
+                    STOK ID FREE FIRE GOIB
+                </h3>
+
+                <p>
+                    ID pilihan dan siap digunakan.
+                </p>
+
+                <button
+                class="btn"
+                onclick="buyGoib()">
+
+                    BELI SEKARANG
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</div>
+
+<!-- POPUP PRODUK -->
+<div class="popup" id="produkPopup">
+
+    <div class="popup-box">
+
+        <h2>
+            Pilih Produk
+        </h2>
+
+        <button onclick="bukaPolosan()">
+            🎮 STOK AKUN FREE FIRE
+        </button>
+
+        <button onclick="bukaGoib()">
+            👑 STOK ID FREE FIRE GOIB
+        </button>
+
+        <button onclick="tutupPopup()">
+            ❌ BATAL
+        </button>
+
+    </div>
+
+</div>
+
+<script>
+
+/* LOADING */
+
+window.onload = function(){
+
+    setTimeout(() => {
+
+        document.getElementById("loading").style.display = "none";
+
+    },2000);
 
 };
 
-function enterStore(){
+/* TEKS INTRO */
 
-document.getElementById("intro").style.display="none";
+const messages = [
+    "Welcome To Galaxy Store 🚀",
+    "Trusted Digital Store ✨",
+    "Temukan akun terbaik hari ini 🔥",
+    "Selamat Berbelanja 👋"
+];
 
-document.getElementById("website").style.display="block";
+document.getElementById("welcomeText").innerText =
+messages[Math.floor(Math.random() * messages.length)];
+
+/* BINTANG */
+
+const starsContainer =
+document.getElementById("stars");
+
+for(let i=0;i<100;i++){
+
+    let star =
+    document.createElement("div");
+
+    star.className = "star";
+
+    star.style.left =
+    Math.random() * 100 + "vw";
+
+    star.style.top =
+    Math.random() * 100 + "vh";
+
+    star.style.animationDuration =
+    (Math.random() * 5 + 3) + "s";
+
+    starsContainer.appendChild(star);
 
 }
+
+/* ENTER */
+
+function enterStore(){
+
+    document.getElementById("intro")
+    .style.display = "none";
+
+    document.getElementById("website")
+    .style.display = "block";
+
+    document.getElementById("burger")
+    .classList.remove("hidden");
+
+}
+
+/* HAMBURGER */
 
 function toggleMenu(){
 
-const menu=document.getElementById("sideMenu");
+    const menu =
+    document.getElementById("sideMenu");
 
-menu.style.left=
-menu.style.left==="0px"
-? "-260px"
-: "0px";
-
-}
-
-function showTestimoni(){
-
-let pilih=confirm(
-"OK = Instagram\nBatal = Channel WhatsApp"
-);
-
-if(pilih){
-
-window.open(
-"https://instagram.com/yannygyreal",
-"_blank"
-);
-
-}else{
-
-window.open(
-"https://whatsapp.com/channel/0029Vb8P8kv8F2p73QX6Py2k",
-"_blank"
-);
+    menu.style.left =
+    menu.style.left === "0px"
+    ? "-260px"
+    : "0px";
 
 }
 
+/* HOME */
+
+function goHome(){
+
+    document.getElementById("sideMenu")
+    .style.left = "-260px";
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+
 }
+
+/* POPUP PRODUK */
 
 function pilihProduk(){
 
-document.getElementById("produkPopup")
-.style.display="flex";
+    document.getElementById("sideMenu")
+    .style.left = "-260px";
+
+    document.getElementById("produkPopup")
+    .style.display = "flex";
 
 }
 
 function tutupPopup(){
 
-document.getElementById("produkPopup")
-.style.display="none";
+    document.getElementById("produkPopup")
+    .style.display = "none";
 
 }
+
+/* PRODUK FF */
 
 function bukaPolosan(){
 
-tutupPopup();
+    tutupPopup();
 
-document.getElementById("ffPolosan")
-.scrollIntoView({
-behavior:"smooth"
-});
-
-}
-
-function bukaCantik(){
-
-tutupPopup();
-
-document.getElementById("ffCantik")
-.scrollIntoView({
-behavior:"smooth"
-});
+    document.getElementById("ffPolosan")
+    .scrollIntoView({
+        behavior:"smooth",
+        block:"center"
+    });
 
 }
 
-</script></body>
+/* PRODUK FF GOIB */
+
+function bukaGoib(){
+
+    tutupPopup();
+
+    document.getElementById("ffGoib")
+    .scrollIntoView({
+        behavior:"smooth",
+        block:"center"
+    });
+
+}
+
+/* BELI FF */
+
+function buyPolosan(){
+
+    const nomor =
+    "62882001163626";
+
+    const pesan =
+    "Min saya mau beli stok akun free fire";
+
+    window.open(
+        "https://wa.me/" +
+        nomor +
+        "?text=" +
+        encodeURIComponent(pesan),
+        "_blank"
+    );
+
+}
+
+/* BELI FF GOIB */
+
+function buyGoib(){
+
+    const nomor =
+    "62882001163626";
+
+    const pesan =
+    "Min saya mau beli stok id free fire goib";
+
+    window.open(
+        "https://wa.me/" +
+        nomor +
+        "?text=" +
+        encodeURIComponent(pesan),
+        "_blank"
+    );
+
+}
+
+</script>
+
+</body>
 </html>
-
-<!-- PROMO -->
-
-<section class="announcement">
-
-<div class="announce-box">
-
-<h2>🔥 PROMO HARI INI 🔥</h2>
-
-<p>
-Selamat datang di YANN YGY STORE.
-Pastikan cek testimoni sebelum membeli.
-</p>
-
-</div>
-
-</section>
-
-.announcement{
-padding:20px;
-display:flex;
-justify-content:center;
-}
-
-.announce-box{
-max-width:800px;
-width:100%;
-background:#151515;
-border:1px solid #222;
-padding:20px;
-border-radius:15px;
-text-align:center;
-}
-
-.announce-box h2{
-margin-bottom:10px;
-}
-
-document.addEventListener("click",function(e){
-
-const menu=document.getElementById("sideMenu");
-const burger=document.querySelector(".burger");
-
-if(
-!menu.contains(e.target)
-&&
-!burger.contains(e.target)
-){
-
-menu.style.left="-260px";
-
-}
-
-});
-
- 
- <section class="hero">
-
-<h1>AKUN FREE FIRE PREMIUM</h1>
-
-<p>
-FF POLOSAN • ID FF CANTIK
-</p>
-
-</section>
-
-<a href="#" onclick="showTestimoni()">
-📸 Testimoni
-</a> function showTestimoni(){
-
-let pilih = confirm(
-"OK = Instagram\nBatal = Channel WhatsApp"
-);
-
-if(pilih){
-
-window.open(
-"https://instagram.com/yannygyreal",
-"_blank"
-);
-
-}else{
-
-window.open(
-"https://whatsapp.com/channel/0029Vb8P8kv8F2p73QX6Py2k",
-"_blank"
-);
-
-}
-
-}
-
-<a href="#" onclick="caraOrder()">
-📦 Cara Order
-</a> function caraOrder(){
-
-alert(
-"📦 CARA ORDER\\n\\n" +
-"1. Pilih Produk\\n" +
-"2. Klik BELI\\n" +
-"3. Transfer ke DANA\\n" +
-"4. Klik Saya Sudah Transfer\\n" +
-"5. Kirim bukti transfer ke Admin\\n" +
-"6. Data akun akan dikirim Admin"
-);
-
-}
-
-<div class="running-text">
-
-<marquee>
-🔥 Selamat Datang Di YANN YGY STORE • Fast Response • Trusted Seller • Cek Testimoni Terlebih Dahulu 🔥
-</marquee>
-
-</div>
-
-<div class="running-text">
-
-<marquee>
-🔥 Selamat Datang Di YANN YGY STORE • Fast Response • Trusted Seller • Cek Testimoni Terlebih Dahulu 🔥
-</marquee>
-
-</div>
-
-.running-text{
-background:#111;
-padding:10px;
-border-bottom:1px solid #222;
-}
-
-<section class="stats">
-
-<div class="stat-box">
-<h2>100+</h2>
-<p>Transaksi</p>
-</div>
-
-<div class="stat-box">
-<h2>24 Jam</h2>
-<p>Fast Respon</p>
-</div>
-
-<div class="stat-box">
-<h2>100%</h2>
-<p>Trusted</p>
-</div>
-
-</section>
-
-.stats{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:15px;
-padding:20px;
-max-width:900px;
-margin:auto;
-}
-
-.stat-box{
-background:#151515;
-padding:20px;
-text-align:center;
-border-radius:15px;
-border:1px solid #222;
-}
-
-<button id="topBtn" onclick="topFunction()">
-⬆
-</button>
-
-#topBtn{
-display:none;
-position:fixed;
-bottom:20px;
-right:20px;
-width:50px;
-height:50px;
-border:none;
-border-radius:50%;
-cursor:pointer;
-font-size:20px;
-z-index:999;
-}
-
-window.onscroll=function(){
-
-const btn=
-document.getElementById("topBtn");
-
-if(
-document.body.scrollTop>300
-||
-document.documentElement.scrollTop>300
-){
-
-btn.style.display="block";
-
-}else{
-
-btn.style.display="none";
-
-}
-
-};
-
-function topFunction(){
-
-window.scrollTo({
-top:0,
-behavior:"smooth"
-});
-
-}
-
-.card{
-opacity:0;
-transform:translateY(40px);
-transition:.8s;
-}
-
-.card.show{
-opacity:1;
-transform:translateY(0);
-}
-
-const cards=
-document.querySelectorAll(".card");
-
-window.addEventListener(
-"scroll",
-()=>{
-
-cards.forEach(card=>{
-
-const top=
-card.getBoundingClientRect().top;
-
-if(top<window.innerHeight-100){
-
-card.classList.add("show");
-
-}
-
-});
-
-}
-);
-
-header h1{
-
-text-shadow:
-0 0 10px rgba(255,255,255,.5),
-0 0 20px rgba(255,255,255,.3);
-
-}
-
-.card{
-transition:.3s;
-}
-
-.card:hover{
-
-transform:translateY(-5px);
-
-box-shadow:
-0 10px 25px rgba(255,255,255,.08);
-
-}
-
-<audio id="bgMusic" loop>
-<source src="music.mp3" type="audio/mpeg">
-</audio>
-
-<button id="musicBtn" onclick="toggleMusic()">
-🎵
-</button>
-
-#musicBtn{
-position:fixed;
-bottom:85px;
-right:20px;
-width:50px;
-height:50px;
-border:none;
-border-radius:50%;
-cursor:pointer;
-z-index:999;
-}
-
-let musicPlaying=false;
-
-function toggleMusic(){
-
-const music=
-document.getElementById("bgMusic");
-
-if(!musicPlaying){
-
-music.play();
-musicPlaying=true;
-
-}else{
-
-music.pause();
-musicPlaying=false;
-
-}
-
-}
-
-    
