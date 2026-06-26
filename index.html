@@ -1,36 +1,445 @@
-<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Hand Blur Camera</title>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Hand Blur Camera AI</title>
+
 <style>
-body{margin:0;background:#111;color:#fff;font-family:Arial;display:flex;flex-direction:column;align-items:center}
-#wrap{position:relative;width:min(95vw,480px);margin-top:20px}
-video,canvas{width:100%;border-radius:16px}
-video{filter:blur(0);transition:filter .25s}
-#status{margin:12px}
-</style></head><body>
-<h3>Live Camera Blur (Demo)</h3>
-<div id="wrap"><video id="video" autoplay playsinline muted></video></div>
-<div id="status">Memuat...</div>
-<script type="module">
-import {FilesetResolver, HandLandmarker} from "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.14";
-const v=document.getElementById("video"),s=document.getElementById("status");
-const stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:"user"}});
-v.srcObject=stream;
-await v.play();
-const vision=await FilesetResolver.forVisionTasks("https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.14/wasm");
-const hand=await HandLandmarker.createFromOptions(vision,{baseOptions:{modelAssetPath:"https://storage.googleapis.com/mediapipe-models/hand_landmarker/hand_landmarker/float16/1/hand_landmarker.task"},runningMode:"VIDEO",numHands:1});
-function count(l){
- let tips=[4,8,12,16,20],c=0;
- if(l[4].x<l[3].x)c++;
- [[8,6],[12,10],[16,14],[20,18]].forEach(p=>{if(l[p[0]].y<l[p[1]].y)c++;});
- return c;
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
 }
-function loop(){
- let r=hand.detectForVideo(v,performance.now());
- let n=0;
- if(r.landmarks&&r.landmarks.length)n=count(r.landmarks[0]);
- v.style.filter=n>=5?"blur(12px)":"blur(0)";
- s.textContent="Jari: "+n+(n>=5?" (BLUR)":" (NORMAL)");
- requestAnimationFrame(loop);
+
+html,body{
+width:100%;
+height:100%;
+overflow:hidden;
+background:#000;
+font-family:Arial,sans-serif;
 }
-loop();
-</script></body></html>
+
+#container{
+position:relative;
+width:100vw;
+height:100vh;
+overflow:hidden;
+background:#000;
+}
+
+video{
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:100%;
+object-fit:cover;
+transform:scaleX(-1);
+transition:.25s;
+filter:blur(0px);
+}
+
+canvas{
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:100%;
+pointer-events:none;
+transform:scaleX(-1);
+}
+
+#status{
+position:absolute;
+top:20px;
+left:50%;
+transform:translateX(-50%);
+padding:12px 18px;
+background:rgba(0,0,0,.6);
+border-radius:15px;
+color:#fff;
+font-size:18px;
+font-weight:bold;
+z-index:99;
+backdrop-filter:blur(15px);
+}
+
+#finger{
+position:absolute;
+bottom:30px;
+left:50%;
+transform:translateX(-50%);
+padding:10px 18px;
+background:rgba(0,0,0,.55);
+border-radius:15px;
+font-size:20px;
+color:white;
+font-weight:bold;
+z-index:99;
+}
+
+#loading{
+position:absolute;
+inset:0;
+display:flex;
+justify-content:center;
+align-items:center;
+background:#000;
+color:white;
+font-size:24px;
+z-index:999;
+}
+
+.blur
+
+} from "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.14";
+
+const video = document.getElementById("video");
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+
+const status = document.getElementById("status");
+const finger = document.getElementById("finger");
+const loading = document.getElementById("loading");
+const music = document.getElementById("music");
+
+let handLandmarker;
+let lastVideoTime = -1;
+
+let lastCenterX = 0;
+let lastCenterY = 0;
+let moving = false;
+
+const connections = [
+
+[0,1],[1,2],[2,3],[3,4],
+
+[0,5],[5,6],[6,7],[7,8],
+
+[5,9],[9,10],[10,11],[11,12],
+
+[9,13],[13,14],[14,15],[15,16],
+
+[13,17],[17,18],[18,19],[19,20],
+
+[0,17]
+
+];
+
+async function initCamera(){
+
+const stream =
+await navigator.mediaDevices.getUserMedia({
+
+video:{
+width:1280,
+height:720,
+facingMode:"user"
+}
+
+});
+
+video.srcObject = stream;
+
+await video.play();
+
+canvas.width = video.videoWidth;
+canvas.height = video.videoHeight;
+
+}
+
+async function initAI(){
+
+const vision =
+await FilesetResolver.forVisionTasks(
+"https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.14/wasm"
+);
+
+handLandmarker =
+await HandLandmarker.createFromOptions(
+
+vision,
+
+{
+
+baseOptions:{
+
+modelAssetPath:
+
+"https://storage.googleapis.com/mediapipe-models/hand_landmarker/hand_landmarker/float16/1/hand_landmarker.task"
+
+},
+
+runningMode:"VIDEO",
+
+numHands:1
+
+}
+
+);
+
+loading.style.display="none";
+
+detect();
+
+}
+
+function countFinger(lm){
+
+let total = 0;
+
+if(lm[4].x < lm[3].x)
+total++;
+
+if(lm[8].y < lm[6].y)
+total++;
+
+if(lm[12].y < lm[10].y)
+total++;
+
+if(lm[16].y < lm[14].y)
+total++;
+
+if(lm[20].y < lm[18].y)
+total++;
+
+return total;
+
+}
+
+function drawSkeleton(points){
+
+ctx.clearRect(
+0,
+0,
+canvas.width,
+canvas.height
+);
+
+ctx.lineWidth = 4;
+ctx.strokeStyle="#00ff00";
+
+for(const c of connections){
+
+const a = points[c[0]];
+const b = points[c[1]];
+
+ctx.beginPath();
+
+ctx.moveTo(
+a.x*canvas.width,
+a.y*canvas.height
+);
+
+ctx.lineTo(
+b.x*canvas.width,
+b.y*canvas.height
+);
+
+ctx.stroke();
+
+}
+
+ctx.fillStyle="#00ffff";
+
+for(const p of points){
+
+ctx.beginPath();
+
+ctx.arc(
+
+p.x*canvas.width,
+
+p.y*canvas.height,
+
+6,
+
+0,
+
+Math.PI*2
+
+);
+
+ctx.fill();
+
+}
+
+}
+
+function detect(){
+
+const now = performance.now();
+
+if(video.currentTime !== lastVideoTime){
+
+lastVideoTime = video.currentTime;
+
+const result =
+handLandmarker.detectForVideo(
+video,
+now
+);
+
+ctx.clearRect(
+0,
+0,
+canvas.width,
+canvas.height
+);
+
+if(
+result.landmarks &&
+result.landmarks.length
+){
+
+const points =
+result.landmarks[0];
+
+drawSkeleton(points);
+
+const totalFinger =
+countFinger(points);
+
+finger.innerHTML =
+"Jari : " + totalFinger;
+
+if(totalFinger >= 5){
+
+video.classList.add("blur");
+
+status.innerHTML =
+"BLUR AKTIF";
+
+}else{
+
+video.classList.remove("blur");
+
+status.innerHTML =
+"NORMAL";
+
+}
+
+let centerX = 0;
+let centerY = 0;
+
+for(const p of points){
+
+centerX += p.x;
+centerY += p.y;
+
+}
+
+centerX /= points.length;
+centerY /= points.length;
+
+const moveDistance =
+
+Math.sqrt(
+
+Math.pow(
+centerX-lastCenterX,
+2
+)
+
++
+
+Math.pow(
+centerY-lastCenterY,
+2
+)
+
+);
+
+if(moveDistance > 0.02){
+
+moving = true;
+
+}else{
+
+moving = false;
+
+}
+
+lastCenterX = centerX;
+lastCenterY = centerY;
+
+if(moving){
+
+status.innerHTML =
+"TANGAN BERGERAK";
+
+if(music.paused){
+
+music.play()
+.catch(()=>{});
+
+}
+
+}else{
+
+music.pause();
+
+}
+
+}else{
+
+status.innerHTML =
+"TIDAK ADA TANGAN";
+
+video.classList.remove("blur");
+
+music.pause();
+
+}
+
+}
+
+requestAnimationFrame(
+detect
+);
+
+}
+
+(async()=>{
+
+try{
+
+await initCamera();
+
+await initAI();
+
+}catch(err){
+
+console.error(err);
+
+loading.innerHTML="Gagal membuka kamera";
+
+status.innerHTML="Izinkan akses kamera";
+
+}
+
+})();
+
+window.addEventListener("resize",()=>{
+
+canvas.width=video.videoWidth;
+
+canvas.height=video.videoHeight;
+
+});
+
+document.addEventListener("visibilitychange",()=>{
+
+if(document.hidden){
+
+music.pause();
+
+}
+
+});
+
+</script>
+
+</body>
+ </html>
