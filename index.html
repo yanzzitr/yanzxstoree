@@ -435,108 +435,43 @@ function handMoved(currentLandmarks){
 
 }
 
-function freezeFrame(){
+// 0 jari
+if (fingerCount === 0) {
 
-    freezeCanvas.width = video.videoWidth;
-    freezeCanvas.height = video.videoHeight;
-
-    freezeCtx.drawImage(
-        video,
-        0,
-        0,
-        freezeCanvas.width,
-        freezeCanvas.height
-    );
-
-    freezeCanvas.style.display = "block";
-
-}
-
-function unfreezeFrame(){
-
-    freezeCanvas.style.display = "none";
-
-}
-
-function processHand(fingerCount, landmarks){
-
-    // 0 jari = freeze + musik berhenti
-    if(fingerCount === 0){
-
-        if(!isFrozen){
-
-            freezeFrame();
-
-            isFrozen = true;
-
-        }
-
-        if(isMusicPlaying){
-
-            bgm.pause();
-
-            bgm.currentTime = 0;
-
-            isMusicPlaying = false;
-
-        }
-
-        video.style.filter = "blur(0px)";
-
-        return;
-
+    if (!isFrozen) {
+        freezeFrame();
+        isFrozen = true;
     }
 
-    // Kamera kembali normal
-    if(isFrozen){
+    if (!isMusicPlaying) {
+        bgm.play().catch(() => {});
+        isMusicPlaying = true;
+    }
 
+} else {
+
+    if (isFrozen) {
         unfreezeFrame();
-
         isFrozen = false;
-
     }
 
-    // 2 atau 3 jari bergerak = musik menyala
-    if(
-        (fingerCount === 2 || fingerCount === 3) &&
-        handMoved(landmarks)
-    ){
+    if (fingerCount >= 1 && fingerCount <= 4) {
 
-        if(!isMusicPlaying){
-
-            bgm.play().catch(err=>{
-                console.log(err);
-            });
-
-            isMusicPlaying = true;
-
-        }
-
-    }else{
-
-        if(isMusicPlaying){
-
-            bgm.pause();
-
-            bgm.currentTime = 0;
-
-            isMusicPlaying = false;
-
-        }
-
-    }
-
-    // 5 jari = blur
-    if(fingerCount === 5){
-
-        video.style.filter = "blur(18px)";
-
-    }else{
+        bgm.pause();
+        isMusicPlaying = false;
 
         video.style.filter = "blur(0px)";
-
     }
 
+    if (fingerCount === 5) {
+
+        if (!isMusicPlaying) {
+            bgm.play().catch(() => {});
+            isMusicPlaying = true;
+        }
+
+        video.style.filter = "blur(10px)";
+    }
 }
 
 window.addEventListener("resize", () => {
@@ -576,4 +511,4 @@ document.addEventListener("visibilitychange", () => {
 </script>
 
 </body>
-</html>
+    </html>
