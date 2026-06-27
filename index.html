@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Hand Skeleton Camera</title>
+  <title>Hand Blur + Skeleton</title>
 
   <style>
     html, body {
@@ -22,7 +22,6 @@
       object-fit: cover;
     }
 
-    /* kamera tidak mirror */
     video {
       transform: none;
     }
@@ -47,174 +46,170 @@
 
 <body>
 
-  <video id="video" autoplay playsinline></video>
-  <canvas id="canvas"></canvas>
+<video id="video" autoplay playsinline></video>
+<canvas id="canvas"></canvas>
+<div class="info">Loading...</div>
 
-  <div class="info">Loading...</div>
+<!-- MediaPipe -->
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
 
-  <!-- MediaPipe -->
-  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js"></script>
+<script>
+const videoElement = document.getElementById("video");
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
 
-  <script>
-    const videoElement = document.getElementById("video");
-    const canvas = document.getElementById("canvas");
-    const ctx = canvas.getContext("2d");
+function resize(){
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+window.addEventListener("resize", resize);
+resize();
 
-    function resize() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+// ===================== AUDIO =====================
+const audio = new Audio("https://files.catbox.moe/oe5o3d.mp3");
+audio.loop = true;
+audio.volume = 0.7;
+
+let musicPlaying = false;
+let fingerCount = 0;
+let lastFinger = 0;
+
+// ===================== COUNT FINGER =====================
+function countFingers(lm){
+  let count = 0;
+
+  const tips = [8,12,16,20];
+  const pips = [6,10,14,18];
+
+  for(let i=0;i<tips.length;i++){
+    if(lm[tips[i]].y < lm[pips[i]].y) count++;
+  }
+
+  // thumb fix
+  const thumbTip = lm[4];
+  const thumbIp = lm[3];
+  const thumbMcp = lm[2];
+
+  const isThumbOpen =
+    Math.abs(thumbTip.x - thumbMcp.x) >
+    Math.abs(thumbIp.x - thumbMcp.x);
+
+  if(isThumbOpen) count++;
+
+  return count;
+}
+
+// smoothing
+function smooth(val){
+  lastFinger = Math.round(lastFinger*0.7 + val*0.3);
+  return lastFinger;
+}
+
+// ===================== DRAW =====================
+function drawSkeleton(lm){
+  for(let i=0;i<lm.length;i++){
+    const x = lm[i].x * canvas.width;
+    const y = lm[i].y * canvas.height;
+
+    ctx.beginPath();
+    ctx.arc(x,y,4,0,Math.PI*2);
+    ctx.fillStyle="cyan";
+    ctx.fill();
+  }
+
+  const conn = [
+    [0,1],[1,2],[2,3],[3,4],
+    [0,5],[5,6],[6,7],[7,8],
+    [5,9],[9,10],[10,11],[11,12],
+    [9,13],[13,14],[14,15],[15,16],
+    [13,17],[17,18],[18,19],[19,20],
+    [0,17]
+  ];
+
+  ctx.strokeStyle="lime";
+  ctx.lineWidth=3;
+
+  for(let c of conn){
+    const a = lm[c[0]];
+    const b = lm[c[1]];
+
+    ctx.beginPath();
+    ctx.moveTo(a.x*canvas.width,a.y*canvas.height);
+    ctx.lineTo(b.x*canvas.width,b.y*canvas.height);
+    ctx.stroke();
+  }
+}
+
+// ===================== EFFECT =====================
+function applyEffects(){
+
+  // blur hanya 5 jari
+  if(fingerCount >= 5){
+    videoElement.style.filter="blur(12px)";
+  }else{
+    videoElement.style.filter="none";
+  }
+
+  // musik 0 atau 5 jari
+  if(fingerCount === 0 || fingerCount >= 5){
+    if(!musicPlaying){
+      audio.play().catch(()=>{});
+      musicPlaying=true;
     }
+  }else{
+    audio.pause();
+    audio.currentTime=0;
+    musicPlaying=false;
+  }
+}
 
-    window.addEventListener("resize", resize);
-    resize();
+// ===================== HANDS =====================
+const hands = new Hands({
+  locateFile:(file)=>`https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`
+});
 
-    // =========================
-    // AUDIO
-    // =========================
-    const audio = new Audio("https://files.catbox.moe/oe5o3d.mp3");
-    audio.loop = true;
-    audio.volume = 0.7;
+hands.setOptions({
+  maxNumHands:1,
+  modelComplexity:1,
+  minDetectionConfidence:0.7,
+  minTrackingConfidence:0.7
+});
 
-    let musicPlaying = false;
-    let lastFinger = 0;
-    let fingerCount = 0;
+hands.onResults(onResults);
 
-    // =========================
-    // DETEKSI JARI
-    // =========================
-    function countFingers(lm) {
-      let count = 0;
+function onResults(results){
 
-      const tips = [8, 12, 16, 20];
-      const pips = [6, 10, 14, 18];
+  ctx.clearRect(0,0,canvas.width,canvas.height);
 
-      for (let i = 0; i < tips.length; i++) {
-        if (lm[tips[i]].y < lm[pips[i]].y) count++;
-      }
+  if(results.multiHandLandmarks?.length){
+    const lm = results.multiHandLandmarks[0];
 
-      // thumb
-      if (lm[4].x < lm[3].x) count++;
+    let raw = countFingers(lm);
+    fingerCount = smooth(raw);
 
-      return count;
-    }
+    drawSkeleton(lm);
+  }else{
+    fingerCount = 0;
+  }
 
-    // smoothing biar gak patah-patah
-    function smooth(val) {
-      lastFinger = Math.round(lastFinger * 0.7 + val * 0.3);
-      return lastFinger;
-    }
+  document.querySelector(".info").innerText =
+    "Jari: " + fingerCount;
 
-    // =========================
-    // SKELETON DRAW
-    // =========================
-    function drawSkeleton(lm) {
-      // titik
-      for (let i = 0; i < lm.length; i++) {
-        const x = lm[i].x * canvas.width;
-        const y = lm[i].y * canvas.height;
+  applyEffects();
+}
 
-        ctx.beginPath();
-        ctx.arc(x, y, 4, 0, Math.PI * 2);
-        ctx.fillStyle = "cyan";
-        ctx.fill();
-      }
+// ===================== CAMERA =====================
+const camera = new Camera(videoElement,{
+  onFrame: async()=>{
+    await hands.send({image:videoElement});
+  },
+  width:1280,
+  height:720
+});
 
-      const connections = [
-        [0,1],[1,2],[2,3],[3,4],
-        [0,5],[5,6],[6,7],[7,8],
-        [5,9],[9,10],[10,11],[11,12],
-        [9,13],[13,14],[14,15],[15,16],
-        [13,17],[17,18],[18,19],[19,20],
-        [0,17]
-      ];
-
-      ctx.strokeStyle = "lime";
-      ctx.lineWidth = 3;
-
-      for (let c of connections) {
-        const a = lm[c[0]];
-        const b = lm[c[1]];
-
-        ctx.beginPath();
-        ctx.moveTo(a.x * canvas.width, a.y * canvas.height);
-        ctx.lineTo(b.x * canvas.width, b.y * canvas.height);
-        ctx.stroke();
-      }
-    }
-
-    // =========================
-    // EFFECT
-    // =========================
-    function applyEffects() {
-      // 5 jari → blur
-      if (fingerCount === 5) {
-        videoElement.style.filter = "blur(10px)";
-      } else {
-        videoElement.style.filter = "none";
-      }
-
-      // 0 jari → musik
-      if (fingerCount === 0) {
-        if (!musicPlaying) {
-          audio.play().catch(()=>{});
-          musicPlaying = true;
-        }
-      } else {
-        audio.pause();
-        audio.currentTime = 0;
-        musicPlaying = false;
-      }
-    }
-
-    // =========================
-    // MEDIA PIPE
-    // =========================
-    const hands = new Hands({
-      locateFile: (file) =>
-        `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`
-    });
-
-    hands.setOptions({
-      maxNumHands: 1,
-      modelComplexity: 1,
-      minDetectionConfidence: 0.7,
-      minTrackingConfidence: 0.7
-    });
-
-    hands.onResults(onResults);
-
-    function onResults(results) {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      if (results.multiHandLandmarks?.length > 0) {
-        const lm = results.multiHandLandmarks[0];
-
-        let raw = countFingers(lm);
-        fingerCount = smooth(raw);
-
-        drawSkeleton(lm);
-      } else {
-        fingerCount = 0;
-      }
-
-      document.querySelector(".info").innerText =
-        `Jari: ${fingerCount}`;
-
-      applyEffects();
-    }
-
-    const camera = new Camera(videoElement, {
-      onFrame: async () => {
-        await hands.send({ image: videoElement });
-      },
-      width: 1280,
-      height: 720
-    });
-
-    camera.start();
-  </script>
+camera.start();
+</script>
 
 </body>
 </html>
