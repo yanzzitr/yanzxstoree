@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Hand Blur 4-5 Fix</title>
+  <title>Hand Gesture Blur + Music</title>
 
   <style>
     html, body {
@@ -78,19 +78,19 @@ let fingerCount = 0;
 let lastFinger = 0;
 
 // ================= FINGER COUNT =================
-function countFingers(lm) {
+function countFingers(lm){
   let count = 0;
 
-  const tips = [8, 12, 16, 20];
-  const pips = [6, 10, 14, 18];
+  const tips = [8,12,16,20];
+  const pips = [6,10,14,18];
 
-  for (let i = 0; i < tips.length; i++) {
-    if (lm[tips[i]].y < lm[pips[i]].y) {
+  for(let i=0;i<tips.length;i++){
+    if(lm[tips[i]].y < lm[pips[i]].y){
       count++;
     }
   }
 
-  // thumb fix stabil
+  // thumb fix
   const thumbTip = lm[4];
   const thumbIp = lm[3];
   const wrist = lm[0];
@@ -99,14 +99,14 @@ function countFingers(lm) {
     Math.hypot(thumbTip.x - wrist.x, thumbTip.y - wrist.y) >
     Math.hypot(thumbIp.x - wrist.x, thumbIp.y - wrist.y);
 
-  if (thumbOpen) count++;
+  if(thumbOpen) count++;
 
   return count;
 }
 
-// smoothing biar gak loncat
+// smoothing
 function smooth(val){
-  lastFinger = Math.round(lastFinger * 0.6 + val * 0.4);
+  lastFinger = Math.round(lastFinger*0.6 + val*0.4);
   return lastFinger;
 }
 
@@ -148,19 +148,15 @@ function drawSkeleton(lm){
 // ================= EFFECT =================
 function applyEffects(){
 
-  // =========================
-  // BLUR: 4 ATAU 5 JARI
-  // =========================
+  // blur 4–5 jari
   if(fingerCount >= 4){
     videoElement.style.filter = "blur(12px)";
   }else{
     videoElement.style.filter = "none";
   }
 
-  // =========================
-  // MUSIK: 0 ATAU >=4 JARI
-  // =========================
-  if(fingerCount === 0 || fingerCount >= 4){
+  // musik 0–3 jari
+  if(fingerCount <= 3){
     if(!musicPlaying){
       audio.play().catch(()=>{});
       musicPlaying = true;
@@ -197,7 +193,7 @@ function onResults(results){
     fingerCount = smooth(raw);
 
     drawSkeleton(lm);
-  } else {
+  }else{
     fingerCount = 0;
   }
 
@@ -217,6 +213,19 @@ const camera = new Camera(videoElement,{
 });
 
 camera.start();
+
+// ================= AUTO STOP MUSIC =================
+window.addEventListener("blur", stopMusic);
+window.addEventListener("pagehide", stopMusic);
+document.addEventListener("visibilitychange", () => {
+  if(document.hidden) stopMusic();
+});
+
+function stopMusic(){
+  audio.pause();
+  audio.currentTime = 0;
+  musicPlaying = false;
+}
 </script>
 
 </body>
