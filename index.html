@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Hand Blur + Skeleton</title>
+  <title>Hand Blur + Fix Finger</title>
 
   <style>
     html, body {
@@ -22,13 +22,9 @@
       object-fit: cover;
     }
 
-    video {
-      transform: none;
-    }
+    video { transform: none; }
 
-    canvas {
-      pointer-events: none;
-    }
+    canvas { pointer-events: none; }
 
     .info {
       position: absolute;
@@ -50,7 +46,6 @@
 <canvas id="canvas"></canvas>
 <div class="info">Loading...</div>
 
-<!-- MediaPipe -->
 <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
 
@@ -66,7 +61,7 @@ function resize(){
 window.addEventListener("resize", resize);
 resize();
 
-// ===================== AUDIO =====================
+// ================= AUDIO =================
 const audio = new Audio("https://files.catbox.moe/oe5o3d.mp3");
 audio.loop = true;
 audio.volume = 0.7;
@@ -75,38 +70,44 @@ let musicPlaying = false;
 let fingerCount = 0;
 let lastFinger = 0;
 
-// ===================== COUNT FINGER =====================
-function countFingers(lm){
+// ================= FIX FINGER COUNT =================
+function countFingers(lm) {
   let count = 0;
 
-  const tips = [8,12,16,20];
-  const pips = [6,10,14,18];
+  // 4 jari utama
+  const tips = [8, 12, 16, 20];
+  const pips = [6, 10, 14, 18];
 
-  for(let i=0;i<tips.length;i++){
-    if(lm[tips[i]].y < lm[pips[i]].y) count++;
+  for (let i = 0; i < tips.length; i++) {
+    if (lm[tips[i]].y < lm[pips[i]].y) {
+      count++;
+    }
   }
 
-  // thumb fix
+  // ================= THUMB FIX (VERSI KUAT) =================
   const thumbTip = lm[4];
   const thumbIp = lm[3];
   const thumbMcp = lm[2];
+  const wrist = lm[0];
 
-  const isThumbOpen =
-    Math.abs(thumbTip.x - thumbMcp.x) >
-    Math.abs(thumbIp.x - thumbMcp.x);
+  const thumbOpen =
+    Math.hypot(thumbTip.x - wrist.x, thumbTip.y - wrist.y) >
+    Math.hypot(thumbIp.x - wrist.x, thumbIp.y - wrist.y);
 
-  if(isThumbOpen) count++;
+  if (thumbOpen) {
+    count++;
+  }
 
   return count;
 }
 
-// smoothing
+// smoothing anti loncat 4/5
 function smooth(val){
-  lastFinger = Math.round(lastFinger*0.7 + val*0.3);
+  lastFinger = Math.round(lastFinger * 0.75 + val * 0.25);
   return lastFinger;
 }
 
-// ===================== DRAW =====================
+// ================= DRAW =================
 function drawSkeleton(lm){
   for(let i=0;i<lm.length;i++){
     const x = lm[i].x * canvas.width;
@@ -141,17 +142,17 @@ function drawSkeleton(lm){
   }
 }
 
-// ===================== EFFECT =====================
+// ================= EFFECT =================
 function applyEffects(){
 
-  // blur hanya 5 jari
+  // blur 5 jari
   if(fingerCount >= 5){
     videoElement.style.filter="blur(12px)";
   }else{
     videoElement.style.filter="none";
   }
 
-  // musik 0 atau 5 jari
+  // musik 0 atau 5
   if(fingerCount === 0 || fingerCount >= 5){
     if(!musicPlaying){
       audio.play().catch(()=>{});
@@ -164,7 +165,7 @@ function applyEffects(){
   }
 }
 
-// ===================== HANDS =====================
+// ================= HANDS =================
 const hands = new Hands({
   locateFile:(file)=>`https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`
 });
@@ -189,7 +190,7 @@ function onResults(results){
     fingerCount = smooth(raw);
 
     drawSkeleton(lm);
-  }else{
+  } else {
     fingerCount = 0;
   }
 
@@ -199,7 +200,7 @@ function onResults(results){
   applyEffects();
 }
 
-// ===================== CAMERA =====================
+// ================= CAMERA =================
 const camera = new Camera(videoElement,{
   onFrame: async()=>{
     await hands.send({image:videoElement});
@@ -212,4 +213,4 @@ camera.start();
 </script>
 
 </body>
-</html>
+                                                                       </html>
