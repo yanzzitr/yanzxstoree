@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Hand Blur + Fix Finger</title>
+  <title>Hand Blur 4-5 Fix</title>
 
   <style>
     html, body {
@@ -22,9 +22,15 @@
       object-fit: cover;
     }
 
-    video { transform: none; }
+    /* MIRROR OFF */
+    video {
+      transform: scaleX(1) !important;
+      -webkit-transform: scaleX(1) !important;
+    }
 
-    canvas { pointer-events: none; }
+    canvas {
+      pointer-events: none;
+    }
 
     .info {
       position: absolute;
@@ -46,6 +52,7 @@
 <canvas id="canvas"></canvas>
 <div class="info">Loading...</div>
 
+<!-- MediaPipe -->
 <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
 
@@ -70,11 +77,10 @@ let musicPlaying = false;
 let fingerCount = 0;
 let lastFinger = 0;
 
-// ================= FIX FINGER COUNT =================
+// ================= FINGER COUNT =================
 function countFingers(lm) {
   let count = 0;
 
-  // 4 jari utama
   const tips = [8, 12, 16, 20];
   const pips = [6, 10, 14, 18];
 
@@ -84,26 +90,23 @@ function countFingers(lm) {
     }
   }
 
-  // ================= THUMB FIX (VERSI KUAT) =================
+  // thumb fix stabil
   const thumbTip = lm[4];
   const thumbIp = lm[3];
-  const thumbMcp = lm[2];
   const wrist = lm[0];
 
   const thumbOpen =
     Math.hypot(thumbTip.x - wrist.x, thumbTip.y - wrist.y) >
     Math.hypot(thumbIp.x - wrist.x, thumbIp.y - wrist.y);
 
-  if (thumbOpen) {
-    count++;
-  }
+  if (thumbOpen) count++;
 
   return count;
 }
 
-// smoothing anti loncat 4/5
+// smoothing biar gak loncat
 function smooth(val){
-  lastFinger = Math.round(lastFinger * 0.75 + val * 0.25);
+  lastFinger = Math.round(lastFinger * 0.6 + val * 0.4);
   return lastFinger;
 }
 
@@ -145,23 +148,27 @@ function drawSkeleton(lm){
 // ================= EFFECT =================
 function applyEffects(){
 
-  // blur 5 jari
-  if(fingerCount >= 5){
-    videoElement.style.filter="blur(12px)";
+  // =========================
+  // BLUR: 4 ATAU 5 JARI
+  // =========================
+  if(fingerCount >= 4){
+    videoElement.style.filter = "blur(12px)";
   }else{
-    videoElement.style.filter="none";
+    videoElement.style.filter = "none";
   }
 
-  // musik 0 atau 5
-  if(fingerCount === 0 || fingerCount >= 5){
+  // =========================
+  // MUSIK: 0 ATAU >=4 JARI
+  // =========================
+  if(fingerCount === 0 || fingerCount >= 4){
     if(!musicPlaying){
       audio.play().catch(()=>{});
-      musicPlaying=true;
+      musicPlaying = true;
     }
   }else{
     audio.pause();
-    audio.currentTime=0;
-    musicPlaying=false;
+    audio.currentTime = 0;
+    musicPlaying = false;
   }
 }
 
@@ -213,4 +220,4 @@ camera.start();
 </script>
 
 </body>
-                                                                       </html>
+</html>
