@@ -1,231 +1,139 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Hand Gesture Blur + Music</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sorter ID Kembar - YGY STORE</title>
 
-  <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      overflow: hidden;
-      background: black;
-    }
+<style>
+body{
+    font-family:Arial,sans-serif;
+    background:#111;
+    color:#fff;
+    margin:20px;
+}
+.container{
+    max-width:900px;
+    margin:auto;
+}
+textarea{
+    width:100%;
+    height:220px;
+    background:#222;
+    color:#0f0;
+    border:none;
+    padding:10px;
+    border-radius:8px;
+    resize:vertical;
+}
+button{
+    padding:12px 25px;
+    border:none;
+    background:#00c853;
+    color:white;
+    border-radius:8px;
+    font-size:16px;
+    cursor:pointer;
+    margin-top:10px;
+}
+button:hover{
+    background:#00a844;
+}
+pre{
+    background:#222;
+    padding:15px;
+    border-radius:8px;
+    white-space:pre-wrap;
+    margin-top:20px;
+}
+</style>
 
-    video, canvas {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      object-fit: cover;
-    }
-
-    /* MIRROR OFF */
-    video {
-      transform: scaleX(1) !important;
-      -webkit-transform: scaleX(1) !important;
-    }
-
-    canvas {
-      pointer-events: none;
-    }
-
-    .info {
-      position: absolute;
-      bottom: 10px;
-      left: 10px;
-      color: white;
-      font-family: Arial;
-      font-size: 14px;
-      background: rgba(0,0,0,0.5);
-      padding: 8px;
-      border-radius: 8px;
-    }
-  </style>
 </head>
-
 <body>
 
-<video id="video" autoplay playsinline></video>
-<canvas id="canvas"></canvas>
-<div class="info">Loading...</div>
+<div class="container">
 
-<!-- MediaPipe -->
-<script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
+<h2>🔢 Sorter ID Kembar</h2>
+
+<p>Masukkan daftar ID (1 baris 1 ID)</p>
+
+<textarea id="input"></textarea>
+
+<br>
+
+<button onclick="sortID()">Susun ID</button>
+
+<pre id="hasil"></pre>
+
+</div>
 
 <script>
-const videoElement = document.getElementById("video");
-const canvas = document.getElementById("canvas");
-const ctx = canvas.getContext("2d");
 
-function resize(){
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-}
-window.addEventListener("resize", resize);
-resize();
+function maxRepeat(str){
 
-// ================= AUDIO =================
-const audio = new Audio("https://files.catbox.moe/oe5o3d.mp3");
-audio.loop = true;
-audio.volume = 0.7;
+let max=1;
+let count=1;
 
-let musicPlaying = false;
-let fingerCount = 0;
-let lastFinger = 0;
+for(let i=1;i<str.length;i++){
 
-// ================= FINGER COUNT =================
-function countFingers(lm){
-  let count = 0;
-
-  const tips = [8,12,16,20];
-  const pips = [6,10,14,18];
-
-  for(let i=0;i<tips.length;i++){
-    if(lm[tips[i]].y < lm[pips[i]].y){
-      count++;
-    }
-  }
-
-  // thumb fix
-  const thumbTip = lm[4];
-  const thumbIp = lm[3];
-  const wrist = lm[0];
-
-  const thumbOpen =
-    Math.hypot(thumbTip.x - wrist.x, thumbTip.y - wrist.y) >
-    Math.hypot(thumbIp.x - wrist.x, thumbIp.y - wrist.y);
-
-  if(thumbOpen) count++;
-
-  return count;
+if(str[i]==str[i-1]){
+count++;
+}else{
+count=1;
 }
 
-// smoothing
-function smooth(val){
-  lastFinger = Math.round(lastFinger*0.6 + val*0.4);
-  return lastFinger;
+if(count>max)max=count;
+
 }
 
-// ================= DRAW =================
-function drawSkeleton(lm){
-  for(let i=0;i<lm.length;i++){
-    const x = lm[i].x * canvas.width;
-    const y = lm[i].y * canvas.height;
+return max;
 
-    ctx.beginPath();
-    ctx.arc(x,y,4,0,Math.PI*2);
-    ctx.fillStyle="cyan";
-    ctx.fill();
-  }
-
-  const conn = [
-    [0,1],[1,2],[2,3],[3,4],
-    [0,5],[5,6],[6,7],[7,8],
-    [5,9],[9,10],[10,11],[11,12],
-    [9,13],[13,14],[14,15],[15,16],
-    [13,17],[17,18],[18,19],[19,20],
-    [0,17]
-  ];
-
-  ctx.strokeStyle="lime";
-  ctx.lineWidth=3;
-
-  for(let c of conn){
-    const a = lm[c[0]];
-    const b = lm[c[1]];
-
-    ctx.beginPath();
-    ctx.moveTo(a.x*canvas.width,a.y*canvas.height);
-    ctx.lineTo(b.x*canvas.width,b.y*canvas.height);
-    ctx.stroke();
-  }
 }
 
-// ================= EFFECT =================
-function applyEffects(){
+function sortID(){
 
-  // blur 4–5 jari
-  if(fingerCount >= 4){
-    videoElement.style.filter = "blur(12px)";
-  }else{
-    videoElement.style.filter = "none";
-  }
+let data=document.getElementById("input").value.trim().split(/\s+/);
 
-  // musik 0–3 jari
-  if(fingerCount <= 3){
-    if(!musicPlaying){
-      audio.play().catch(()=>{});
-      musicPlaying = true;
-    }
-  }else{
-    audio.pause();
-    audio.currentTime = 0;
-    musicPlaying = false;
-  }
+let hasil={
+4:[],
+5:[],
+6:[],
+7:[],
+8:[]
+};
+
+data.forEach(id=>{
+
+let m=maxRepeat(id);
+
+if(m>=8){
+hasil[8].push(id);
+}else if(m==7){
+hasil[7].push(id);
+}else if(m==6){
+hasil[6].push(id);
+}else if(m==5){
+hasil[5].push(id);
+}else if(m==4){
+hasil[4].push(id);
 }
 
-// ================= HANDS =================
-const hands = new Hands({
-  locateFile:(file)=>`https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`
 });
 
-hands.setOptions({
-  maxNumHands:1,
-  modelComplexity:1,
-  minDetectionConfidence:0.7,
-  minTrackingConfidence:0.7
+let out="";
+
+[8,7,6,5,4].forEach(x=>{
+
+out+="KEMBAR "+x+" : "+hasil[x].length+" ID\n";
+out+=hasil[x].join("\n");
+out+="\n\n";
+
 });
 
-hands.onResults(onResults);
+document.getElementById("hasil").textContent=out;
 
-function onResults(results){
-
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-
-  if(results.multiHandLandmarks?.length){
-    const lm = results.multiHandLandmarks[0];
-
-    let raw = countFingers(lm);
-    fingerCount = smooth(raw);
-
-    drawSkeleton(lm);
-  }else{
-    fingerCount = 0;
-  }
-
-  document.querySelector(".info").innerText =
-    "Jari: " + fingerCount;
-
-  applyEffects();
 }
 
-// ================= CAMERA =================
-const camera = new Camera(videoElement,{
-  onFrame: async()=>{
-    await hands.send({image:videoElement});
-  },
-  width:1280,
-  height:720
-});
-
-camera.start();
-
-// ================= AUTO STOP MUSIC =================
-window.addEventListener("blur", stopMusic);
-window.addEventListener("pagehide", stopMusic);
-document.addEventListener("visibilitychange", () => {
-  if(document.hidden) stopMusic();
-});
-
-function stopMusic(){
-  audio.pause();
-  audio.currentTime = 0;
-  musicPlaying = false;
-}
 </script>
 
 </body>
