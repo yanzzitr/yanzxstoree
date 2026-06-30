@@ -1,139 +1,139 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sorter ID Kembar - YGY STORE</title>
-
-<style>
-body{
-    font-family:Arial,sans-serif;
-    background:#111;
-    color:#fff;
-    margin:20px;
-}
-.container{
-    max-width:900px;
-    margin:auto;
-}
-textarea{
-    width:100%;
-    height:220px;
-    background:#222;
-    color:#0f0;
-    border:none;
-    padding:10px;
-    border-radius:8px;
-    resize:vertical;
-}
-button{
-    padding:12px 25px;
-    border:none;
-    background:#00c853;
-    color:white;
-    border-radius:8px;
-    font-size:16px;
-    cursor:pointer;
-    margin-top:10px;
-}
-button:hover{
-    background:#00a844;
-}
-pre{
-    background:#222;
-    padding:15px;
-    border-radius:8px;
-    white-space:pre-wrap;
-    margin-top:20px;
-}
-</style>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ID KEMBAR SORTER - Maks 11 Digit</title>
+    <style>
+        * {margin:0; padding:0; box-sizing:border-box; font-family:Arial;}
+        body {background:#0a0a12; color:#fff; padding:20px;}
+        .card {background:rgba(255,255,255,0.05); border-radius:12px; padding:16px; margin-bottom:16px; border:1px solid rgba(255,255,255,0.1);}
+        h2 {color:#00e0ff; margin-bottom:12px; font-size:18px;}
+        textarea {width:100%; height:130px; background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.15); border-radius:8px; padding:10px; color:#fff; margin-bottom:12px;}
+        button {padding:10px 16px; border:none; border-radius:8px; cursor:pointer; font-weight:bold; margin-right:8px; margin-bottom:8px;}
+        .btn-utama {background:linear-gradient(90deg,#00c8e0,#9030ff); color:white;}
+        .hasil {display:grid; grid-template-columns:repeat(2,1fr); gap:10px; margin-top:15px;}
+        .kotak {background:rgba(255,255,255,0.06); padding:12px; border-radius:8px; text-align:center;}
+        .angka {font-size:24px; font-weight:bold; color:#00e0ff; margin:6px 0;}
+    </style>
 </head>
 <body>
 
-<div class="container">
+<div class="card">
+    <h2>📝 Masukkan ID (Maks 11 Digit)</h2>
+    <textarea id="input" placeholder="Contoh uji coba:
+1111
+22222
+333333
+4444444
+55555555
+666666666
+7777777777
+88888888888
+12345678901"></textarea>
+    <button class="btn-utama" onclick="proses()">MULAI SORTIR</button>
+    <button onclick="reset()">RESET</button>
+</div>
 
-<h2>🔢 Sorter ID Kembar</h2>
-
-<p>Masukkan daftar ID (1 baris 1 ID)</p>
-
-<textarea id="input"></textarea>
-
-<br>
-
-<button onclick="sortID()">Susun ID</button>
-
-<pre id="hasil"></pre>
-
+<div class="card">
+    <h2>📊 Hasil Sortir</h2>
+    <div class="hasil">
+        <div class="kotak"><h4>Kembar 4</h4><div class="angka" id="k4">0</div><button onclick="unduh(4)">Unduh</button></div>
+        <div class="kotak"><h4>Kembar 5</h4><div class="angka" id="k5">0</div><button onclick="unduh(5)">Unduh</button></div>
+        <div class="kotak"><h4>Kembar 6</h4><div class="angka" id="k6">0</div><button onclick="unduh(6)">Unduh</button></div>
+        <div class="kotak"><h4>Kembar 7</h4><div class="angka" id="k7">0</div><button onclick="unduh(7)">Unduh</button></div>
+        <div class="kotak"><h4>Kembar 8</h4><div class="angka" id="k8">0</div><button onclick="unduh(8)">Unduh</button></div>
+        <div class="kotak"><h4>Kembar 9</h4><div class="angka" id="k9">0</div><button onclick="unduh(9)">Unduh</button></div>
+        <div class="kotak"><h4>Kembar 10</h4><div class="angka" id="k10">0</div><button onclick="unduh(10)">Unduh</button></div>
+        <div class="kotak"><h4>Kembar 11</h4><div class="angka" id="k11">0</div><button onclick="unduh(11)">Unduh</button></div>
+    </div>
+    <button class="btn-utama" onclick="unduhSemua()" style="width:100%; margin-top:15px;">UNDUH SEMUA HASIL</button>
 </div>
 
 <script>
+let hasil = {4:[],5:[],6:[],7:[],8:[],9:[],10:[],11:[]};
 
-function maxRepeat(str){
+function proses() {
+    reset();
+    const teks = document.getElementById('input').value.trim();
+    if(!teks) return alert("⚠️ Masukkan daftar ID terlebih dahulu!");
 
-let max=1;
-let count=1;
+    // Bersihkan data, ambil hanya baris yang berisi angka
+    const daftar = teks.split('\n')
+        .map(baris => baris.trim())
+        .filter(baris => /^\d+$/.test(baris)); // Hanya terima angka murni
 
-for(let i=1;i<str.length;i++){
+    if(daftar.length === 0) return alert("❌ Tidak ada ID angka yang valid!");
 
-if(str[i]==str[i-1]){
-count++;
-}else{
-count=1;
+    for(const id of daftar) {
+        const str = String(id);
+        const panjang = str.length;
+
+        // Batas panjang: minimal 4, maksimal 11
+        if(panjang < 4 || panjang > 11) continue;
+
+        // Hitung urutan angka yang sama berurutan
+        let maksKembar = 1;
+        let hitung = 1;
+        for(let i = 1; i < panjang; i++) {
+            if(str[i] === str[i-1]) {
+                hitung++;
+                if(hitung > maksKembar) maksKembar = hitung;
+            } else {
+                hitung = 1;
+            }
+        }
+
+        // Masukkan ke kategori yang sesuai
+        if(maksKembar >= 4 && maksKembar <= 11) {
+            hasil[maksKembar].push(str);
+        }
+    }
+
+    // Tampilkan jumlah hasil ke layar
+    for(let i = 4; i <= 11; i++) {
+        document.getElementById('k'+i).textContent = hasil[i].length;
+    }
 }
 
-if(count>max)max=count;
-
+function unduh(jumlah) {
+    if(!hasil[jumlah].length) {
+        alert(`ℹ️ Belum ada ID dengan kembar ${jumlah}`);
+        return;
+    }
+    const blob = new Blob([hasil[jumlah].join('\n')], {type:'text/plain;charset=utf-8'});
+    const tautan = document.createElement('a');
+    tautan.href = URL.createObjectURL(blob);
+    tautan.download = `Kembar_${jumlah}.txt`;
+    tautan.click();
 }
 
-return max;
-
+function unduhSemua() {
+    let ada = false;
+    let isi = "";
+    for(let i = 4; i <= 11; i++) {
+        if(hasil[i].length > 0) {
+            isi += `=== KEMBAR ${i} ===\nJumlah: ${hasil[i].length} buah\n${hasil[i].join('\n')}\n\n`;
+            ada = true;
+        }
+    }
+    if(!ada) {
+        alert("ℹ️ Belum ada hasil yang bisa diunduh!");
+        return;
+    }
+    const blob = new Blob([isi], {type:'text/plain;charset=utf-8'});
+    const tautan = document.createElement('a');
+    tautan.href = URL.createObjectURL(blob);
+    tautan.download = `Hasil_Sortir_ID_Kembar_Maks11.txt`;
+    tautan.click();
 }
 
-function sortID(){
-
-let data=document.getElementById("input").value.trim().split(/\s+/);
-
-let hasil={
-4:[],
-5:[],
-6:[],
-7:[],
-8:[]
-};
-
-data.forEach(id=>{
-
-let m=maxRepeat(id);
-
-if(m>=8){
-hasil[8].push(id);
-}else if(m==7){
-hasil[7].push(id);
-}else if(m==6){
-hasil[6].push(id);
-}else if(m==5){
-hasil[5].push(id);
-}else if(m==4){
-hasil[4].push(id);
+function reset() {
+    hasil = {4:[],5:[],6:[],7:[],8:[],9:[],10:[],11:[]};
+    for(let i = 4; i <= 11; i++) {
+        document.getElementById('k'+i).textContent = 0;
+    }
 }
-
-});
-
-let out="";
-
-[8,7,6,5,4].forEach(x=>{
-
-out+="KEMBAR "+x+" : "+hasil[x].length+" ID\n";
-out+=hasil[x].join("\n");
-out+="\n\n";
-
-});
-
-document.getElementById("hasil").textContent=out;
-
-}
-
 </script>
 
 </body>
