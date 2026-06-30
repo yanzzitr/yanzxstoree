@@ -3,138 +3,436 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ID KEMBAR SORTER - Maks 11 Digit</title>
+    <title>Sortir ID Kembar</title>
     <style>
-        * {margin:0; padding:0; box-sizing:border-box; font-family:Arial;}
-        body {background:#0a0a12; color:#fff; padding:20px;}
-        .card {background:rgba(255,255,255,0.05); border-radius:12px; padding:16px; margin-bottom:16px; border:1px solid rgba(255,255,255,0.1);}
-        h2 {color:#00e0ff; margin-bottom:12px; font-size:18px;}
-        textarea {width:100%; height:130px; background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.15); border-radius:8px; padding:10px; color:#fff; margin-bottom:12px;}
-        button {padding:10px 16px; border:none; border-radius:8px; cursor:pointer; font-weight:bold; margin-right:8px; margin-bottom:8px;}
-        .btn-utama {background:linear-gradient(90deg,#00c8e0,#9030ff); color:white;}
-        .hasil {display:grid; grid-template-columns:repeat(2,1fr); gap:10px; margin-top:15px;}
-        .kotak {background:rgba(255,255,255,0.06); padding:12px; border-radius:8px; text-align:center;}
-        .angka {font-size:24px; font-weight:bold; color:#00e0ff; margin:6px 0;}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 50%, #16213e 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            padding: 20px 16px;
+        }
+
+        .container {
+            max-width: 480px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 20px;
+            text-align: center;
+            margin-bottom: 24px;
+            color: #00d4ff;
+            text-shadow: 0 0 12px rgba(0, 212, 255, 0.4);
+            letter-spacing: 1px;
+        }
+
+        /* Kotak Input */
+        .input-box {
+            background: rgba(30, 30, 50, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+        }
+
+        .input-box label {
+            font-size: 14px;
+            color: #b0c4de;
+            margin-bottom: 10px;
+            display: block;
+            font-weight: 500;
+        }
+
+        textarea {
+            width: 100%;
+            height: 130px;
+            background: rgba(40, 40, 70, 0.8);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            border-radius: 8px;
+            color: #ffffff;
+            padding: 12px;
+            font-size: 14px;
+            resize: vertical;
+            margin-bottom: 14px;
+            transition: all 0.25s ease;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: #00d4ff;
+            box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.15);
+        }
+
+        input[type="file"] {
+            width: 100%;
+            background: rgba(40, 40, 70, 0.8);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            border-radius: 8px;
+            color: #e0efff;
+            padding: 10px;
+            margin-bottom: 14px;
+            cursor: pointer;
+            transition: border 0.25s;
+        }
+
+        input[type="file"]:hover {
+            border-color: rgba(0, 212, 255, 0.4);
+        }
+
+        input[type="file"]::-webkit-file-upload-button {
+            background: linear-gradient(90deg, #0077b6, #0096c7);
+            color: white;
+            border: none;
+            padding: 5px 12px;
+            border-radius: 5px;
+            margin-right: 10px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        input[type="file"]::-webkit-file-upload-button:hover {
+            background: linear-gradient(90deg, #023e8a, #0077b6);
+        }
+
+        .btn-row {
+            display: flex;
+            gap: 12px;
+        }
+
+        button {
+            border: none;
+            border-radius: 8px;
+            padding: 10px 16px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.25s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-sort {
+            background: linear-gradient(90deg, #00b4d8, #0077b6);
+            color: white;
+            flex: 1;
+        }
+
+        .btn-sort:hover {
+            background: linear-gradient(90deg, #0096c7, #023e8a);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 180, 216, 0.3);
+        }
+
+        .btn-reset {
+            background: linear-gradient(90deg, #e63946, #d62828);
+            color: white;
+        }
+
+        .btn-reset:hover {
+            background: linear-gradient(90deg, #d62828, #9d0208);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(230, 57, 70, 0.3);
+        }
+
+        /* Grid Hasil */
+        .hasil-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin-bottom: 24px;
+        }
+
+        .kotak-kembar {
+            background: rgba(30, 30, 50, 0.7);
+            backdrop-filter: blur(8px);
+            border-radius: 10px;
+            padding: 18px 12px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s;
+        }
+
+        .kotak-kembar:hover {
+            transform: translateY(-2px);
+            border-color: rgba(0, 212, 255, 0.3);
+        }
+
+        .kotak-kembar h3 {
+            font-size: 15px;
+            color: #a8d1ff;
+            margin-bottom: 12px;
+        }
+
+        .jumlah {
+            font-size: 24px;
+            font-weight: bold;
+            color: #00f5d4;
+            margin-bottom: 14px;
+            text-shadow: 0 0 8px rgba(0, 245, 212, 0.4);
+        }
+
+        .btn-unduh {
+            width: 100%;
+            background: rgba(60, 80, 120, 0.8);
+            color: #e0f7ff;
+            border: 1px solid rgba(0, 212, 255, 0.2);
+        }
+
+        .btn-unduh:hover {
+            background: rgba(80, 110, 160, 0.9);
+            border-color: rgba(0, 212, 255, 0.5);
+        }
+
+        .btn-unduh-semua {
+            width: 100%;
+            background: linear-gradient(90deg, #7209b7, #3a0ca3);
+            color: white;
+            padding: 14px;
+            font-size: 16px;
+            font-weight: 700;
+            box-shadow: 0 3px 12px rgba(114, 9, 183, 0.3);
+        }
+
+        .btn-unduh-semua:hover {
+            background: linear-gradient(90deg, #560bad, #240046);
+            transform: translateY(-1px);
+            box-shadow: 0 5px 16px rgba(114, 9, 183, 0.4);
+        }
+
+        /* Daftar ID */
+        .daftar-tampil {
+            margin-top: 28px;
+            display: none;
+        }
+
+        .daftar-kelompok {
+            background: rgba(30, 30, 50, 0.7);
+            backdrop-filter: blur(8px);
+            border-radius: 10px;
+            padding: 16px;
+            margin-bottom: 18px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .daftar-kelompok h4 {
+            color: #00f5d4;
+            margin-bottom: 12px;
+            font-size: 17px;
+            text-shadow: 0 0 6px rgba(0, 245, 212, 0.3);
+        }
+
+        .id-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(145px, 1fr));
+            gap: 9px;
+            margin-bottom: 14px;
+        }
+
+        .id-item {
+            background: rgba(50, 50, 90, 0.8);
+            padding: 9px;
+            border-radius: 6px;
+            text-align: center;
+            font-size: 13px;
+            border: 1px solid rgba(0, 212, 255, 0.15);
+            transition: all 0.2s;
+        }
+
+        .id-item:hover {
+            background: rgba(70, 70, 120, 0.9);
+            border-color: rgba(0, 212, 255, 0.4);
+        }
     </style>
 </head>
 <body>
+<div class="container">
+    <h1>📊 SORTIR ID KEMBAR</h1>
 
-<div class="card">
-    <h2>📝 Masukkan ID (Maks 11 Digit)</h2>
-    <textarea id="input" placeholder="Contoh uji coba:
-1111
-22222
-333333
-4444444
-55555555
-666666666
-7777777777
-88888888888
-12345678901"></textarea>
-    <button class="btn-utama" onclick="proses()">MULAI SORTIR</button>
-    <button onclick="reset()">RESET</button>
-</div>
-
-<div class="card">
-    <h2>📊 Hasil Sortir</h2>
-    <div class="hasil">
-        <div class="kotak"><h4>Kembar 4</h4><div class="angka" id="k4">0</div><button onclick="unduh(4)">Unduh</button></div>
-        <div class="kotak"><h4>Kembar 5</h4><div class="angka" id="k5">0</div><button onclick="unduh(5)">Unduh</button></div>
-        <div class="kotak"><h4>Kembar 6</h4><div class="angka" id="k6">0</div><button onclick="unduh(6)">Unduh</button></div>
-        <div class="kotak"><h4>Kembar 7</h4><div class="angka" id="k7">0</div><button onclick="unduh(7)">Unduh</button></div>
-        <div class="kotak"><h4>Kembar 8</h4><div class="angka" id="k8">0</div><button onclick="unduh(8)">Unduh</button></div>
-        <div class="kotak"><h4>Kembar 9</h4><div class="angka" id="k9">0</div><button onclick="unduh(9)">Unduh</button></div>
-        <div class="kotak"><h4>Kembar 10</h4><div class="angka" id="k10">0</div><button onclick="unduh(10)">Unduh</button></div>
-        <div class="kotak"><h4>Kembar 11</h4><div class="angka" id="k11">0</div><button onclick="unduh(11)">Unduh</button></div>
+    <div class="input-box">
+        <label>Masukkan ID atau Pilih File .txt</label>
+        <textarea id="inputId" placeholder="Bisa tempel langsung atau unggah file .txt berisi daftar ID"></textarea>
+        <input type="file" id="fileInput" accept=".txt" />
+        <div class="btn-row">
+            <button class="btn-sort" onclick="prosesSemua()">MULAI SORTIR</button>
+            <button class="btn-reset" onclick="resetSemua()">RESET</button>
+        </div>
     </div>
-    <button class="btn-utama" onclick="unduhSemua()" style="width:100%; margin-top:15px;">UNDUH SEMUA HASIL</button>
+
+    <div class="hasil-grid">
+        <div class="kotak-kembar" id="kotak4">
+            <h3>Kembar 4</h3>
+            <div class="jumlah" id="jml4">0</div>
+            <button class="btn-unduh" onclick="unduhBagian('4')">Unduh</button>
+        </div>
+        <div class="kotak-kembar" id="kotak5">
+            <h3>Kembar 5</h3>
+            <div class="jumlah" id="jml5">0</div>
+            <button class="btn-unduh" onclick="unduhBagian('5')">Unduh</button>
+        </div>
+        <div class="kotak-kembar" id="kotak6">
+            <h3>Kembar 6</h3>
+            <div class="jumlah" id="jml6">0</div>
+            <button class="btn-unduh" onclick="unduhBagian('6')">Unduh</button>
+        </div>
+        <div class="kotak-kembar" id="kotak7">
+            <h3>Kembar 7</h3>
+            <div class="jumlah" id="jml7">0</div>
+            <button class="btn-unduh" onclick="unduhBagian('7')">Unduh</button>
+        </div>
+        <div class="kotak-kembar" id="kotak8">
+            <h3>Kembar 8</h3>
+            <div class="jumlah" id="jml8">0</div>
+            <button class="btn-unduh" onclick="unduhBagian('8')">Unduh</button>
+        </div>
+        <div class="kotak-kembar" id="kotak9">
+            <h3>Kembar 9</h3>
+            <div class="jumlah" id="jml9">0</div>
+            <button class="btn-unduh" onclick="unduhBagian('9')">Unduh</button>
+        </div>
+        <div class="kotak-kembar" id="kotak10">
+            <h3>Kembar 10</h3>
+            <div class="jumlah" id="jml10">0</div>
+            <button class="btn-unduh" onclick="unduhBagian('10')">Unduh</button>
+        </div>
+        <div class="kotak-kembar" id="kotak11">
+            <h3>Kembar 11</h3>
+            <div class="jumlah" id="jml11">0</div>
+            <button class="btn-unduh" onclick="unduhBagian('11')">Unduh</button>
+        </div>
+    </div>
+
+    <button class="btn-unduh-semua" onclick="unduhSemua()">📦 UNDUH SEMUA HASIL</button>
+
+    <div class="daftar-tampil" id="daftarTampil"></div>
 </div>
 
 <script>
-let hasil = {4:[],5:[],6:[],7:[],8:[],9:[],10:[],11:[]};
+let dataKelompok = {
+    '4': [], '5': [], '6': [], '7': [],
+    '8': [], '9': [], '10': [], '11': [], 'lainnya': []
+};
 
-function proses() {
-    reset();
-    const teks = document.getElementById('input').value.trim();
-    if(!teks) return alert("⚠️ Masukkan daftar ID terlebih dahulu!");
+// Baca file .txt
+document.getElementById('fileInput').addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    if (!file) return;
 
-    // Bersihkan data, ambil hanya baris yang berisi angka
-    const daftar = teks.split('\n')
-        .map(baris => baris.trim())
-        .filter(baris => /^\d+$/.test(baris)); // Hanya terima angka murni
-
-    if(daftar.length === 0) return alert("❌ Tidak ada ID angka yang valid!");
-
-    for(const id of daftar) {
-        const str = String(id);
-        const panjang = str.length;
-
-        // Batas panjang: minimal 4, maksimal 11
-        if(panjang < 4 || panjang > 11) continue;
-
-        // Hitung urutan angka yang sama berurutan
-        let maksKembar = 1;
-        let hitung = 1;
-        for(let i = 1; i < panjang; i++) {
-            if(str[i] === str[i-1]) {
-                hitung++;
-                if(hitung > maksKembar) maksKembar = hitung;
-            } else {
-                hitung = 1;
-            }
-        }
-
-        // Masukkan ke kategori yang sesuai
-        if(maksKembar >= 4 && maksKembar <= 11) {
-            hasil[maksKembar].push(str);
-        }
-    }
-
-    // Tampilkan jumlah hasil ke layar
-    for(let i = 4; i <= 11; i++) {
-        document.getElementById('k'+i).textContent = hasil[i].length;
-    }
-}
-
-function unduh(jumlah) {
-    if(!hasil[jumlah].length) {
-        alert(`ℹ️ Belum ada ID dengan kembar ${jumlah}`);
+    if (!file.name.toLowerCase().endsWith('.txt')) {
+        alert("⚠️ Hanya mendukung file berekstensi .txt");
+        this.value = '';
         return;
     }
-    const blob = new Blob([hasil[jumlah].join('\n')], {type:'text/plain;charset=utf-8'});
-    const tautan = document.createElement('a');
-    tautan.href = URL.createObjectURL(blob);
-    tautan.download = `Kembar_${jumlah}.txt`;
-    tautan.click();
+
+    const reader = new FileReader();
+    reader.onload = function(evt) {
+        document.getElementById('inputId').value = evt.target.result;
+    };
+    reader.onerror = () => alert("❌ Gagal membaca file, coba ulangi");
+    reader.readAsText(file, 'UTF-8');
+});
+
+// Aturan hitung: abaikan angka paling depan
+function hitungKembar(id) {
+    const str = String(id).trim();
+    if (str.length < 2 || !/^\d+$/.test(str)) return 0;
+    const angka = str.slice(1);
+    const hitung = {};
+    let max = 0;
+    for (const a of angka) {
+        hitung[a] = (hitung[a] || 0) + 1;
+        if (hitung[a] > max) max = hitung[a];
+    }
+    return max;
+}
+
+// Proses sortir
+function prosesSemua() {
+    const teks = document.getElementById('inputId').value.trim();
+    if (!teks) return alert("⚠️ Masukkan ID atau unggah file dulu");
+
+    const daftar = teks.split(/[\s\n\r\t]+/).filter(x => x.trim() && /^\d+$/.test(x));
+    if (daftar.length === 0) return alert("⚠️ Tidak ada ID valid yang ditemukan");
+
+    Object.keys(dataKelompok).forEach(k => dataKelompok[k] = []);
+
+    daftar.forEach(id => {
+        const jml = hitungKembar(id);
+        if (jml >= 4 && jml <= 11) dataKelompok[String(jml)].push(id);
+        else dataKelompok.lainnya.push(id);
+    });
+
+    // Update jumlah
+    for (let i = 4; i <= 11; i++) {
+        document.getElementById(`jml${i}`).textContent = dataKelompok[String(i)].length;
+    }
+
+    tampilkanHasil();
+}
+
+function tampilkanHasil() {
+    let html = '';
+    for (const [k, arr] of Object.entries(dataKelompok)) {
+        if (arr.length === 0) continue;
+        const judul = k === 'lainnya' ? 'Lainnya' : `Kembar ${k}`;
+        html += `
+        <div class="daftar-kelompok">
+            <h4>${judul} (${arr.length})</h4>
+            <div class="id-list">
+                ${arr.map(i => `<div class="id-item">${i}</div>`).join('')}
+            </div>
+            <button class="btn-unduh" onclick="unduhBagian('${k}')">Unduh Bagian Ini</button>
+        </div>`;
+    }
+    const el = document.getElementById('daftarTampil');
+    el.innerHTML = html;
+    el.style.display = html ? 'block' : 'none';
+}
+
+function unduhBagian(kunci) {
+    const arr = dataKelompok[kunci];
+    if (!arr || arr.length === 0) return alert("ℹ️ Belum ada data");
+    simpanFile(`Kembar_${kunci}.txt`, arr.join('\n'));
 }
 
 function unduhSemua() {
-    let ada = false;
-    let isi = "";
-    for(let i = 4; i <= 11; i++) {
-        if(hasil[i].length > 0) {
-            isi += `=== KEMBAR ${i} ===\nJumlah: ${hasil[i].length} buah\n${hasil[i].join('\n')}\n\n`;
-            ada = true;
-        }
+    let teks = '';
+    for (const [k, arr] of Object.entries(dataKelompok)) {
+        if (arr.length === 0) continue;
+        const judul = k === 'lainnya' ? 'Lainnya' : `Kembar ${k}`;
+        teks += `=== ${judul} ===\n${arr.join('\n')}\n\n`;
     }
-    if(!ada) {
-        alert("ℹ️ Belum ada hasil yang bisa diunduh!");
-        return;
-    }
-    const blob = new Blob([isi], {type:'text/plain;charset=utf-8'});
-    const tautan = document.createElement('a');
-    tautan.href = URL.createObjectURL(blob);
-    tautan.download = `Hasil_Sortir_ID_Kembar_Maks11.txt`;
-    tautan.click();
+    if (!teks.trim()) return alert("ℹ️ Belum ada hasil sortir");
+    simpanFile('Hasil_Susun_ID_Kembar.txt', teks.trim());
 }
 
-function reset() {
-    hasil = {4:[],5:[],6:[],7:[],8:[],9:[],10:[],11:[]};
-    for(let i = 4; i <= 11; i++) {
-        document.getElementById('k'+i).textContent = 0;
-    }
+function simpanFile(nama, isi) {
+    const blob = new Blob([isi], {type: 'text/plain;charset=utf-8'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = nama;
+    a.click();
+    URL.revokeObjectURL(url);
+}
+
+function resetSemua() {
+    document.getElementById('inputId').value = '';
+    document.getElementById('fileInput').value = '';
+    document.getElementById('daftarTampil').innerHTML = '';
+    document.getElementById('daftarTampil').style.display = 'none';
+    for (let i = 4; i <= 11; i++) document.getElementById(`jml${i}`).textContent = '0';
+    Object.keys(dataKelompok).forEach(k => dataKelompok[k] = []);
 }
 </script>
-
 </body>
 </html>
